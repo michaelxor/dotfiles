@@ -21,6 +21,7 @@ prompt_svn() {
         branchName=`svn info | grep ^URL | sed -Ee 's,.*(http.*com)/([^/]*)(/(trunk|branches/([^/]*)))?.*,\4,'`
 
         if [ ! -z "${branchName}" ]; then
+            branchNameFriendly=`echo ${branchName} | sed -Ee 's,(branches/)?(.*),\2,'`
             branchRoot=`pwd | sed -Ee 's,(.*/'${repo}'/'${branchName}')(/.*)?,\1,'`
 
             if [ ! -z "$(svn st $branchRoot | grep ^A)" ]; then
@@ -37,7 +38,7 @@ prompt_svn() {
 
             [ -n "$s" ] && s=" [$s]"
 
-            printf "%s" "$1$branchName$s"
+            printf "%s" "$1$branchNameFriendly$s"
         else
             return
         fi
