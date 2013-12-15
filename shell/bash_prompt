@@ -11,6 +11,41 @@
 # Color ref: http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
 # More tips: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
 
+prompt_svn() {
+    local s=""
+    local branchName=""
+
+    repo_root=`svn info 2> /dev/null | grep ^URL | sed -Ee 's,.*(http.*com)/([^/]*)(/(trunk|branches/([^/]*)))?.*,\1,'`
+    if [ ! -z "${repo_root}" ]; then
+        repo=`svn info 2> /dev/null | grep ^URL | sed -Ee 's,.*(http.*com)/([^/]*)(/(trunk|branches/([^/]*)))?.*,\2,'`
+        branchName=`svn info | grep ^URL | sed -Ee 's,.*(http.*com)/([^/]*)(/(trunk|branches/([^/]*)))?.*,\4,'`
+
+        if [ ! -z "${branchName}" ]; then
+            branchRoot=`pwd | sed -Ee 's,(.*/'${repo}'/'${branchName}')(/.*)?,\1,'`
+
+            if [ ! -z "$(svn st $branchRoot | grep ^A)" ]; then
+                s="$s+";
+            fi
+
+            if [ ! -z "$(svn st $branchRoot | grep ^D)" ]; then
+                s="$s-";
+            fi
+
+            if [ ! -z "$(svn st $branchRoot | grep ^?)" ]; then
+                s="$s?";
+            fi
+
+            [ -n "$s" ] && s=" [$s]"
+
+            printf "%s" "$1$branchName$s"
+        else
+            return
+        fi
+    else
+        return
+    fi
+}
+
 prompt_git() {
     local s=""
     local branchName=""
@@ -135,6 +170,7 @@ set_prompts() {
     PS1+="\[$reset$white\]: "
     PS1+="\[$green\]\w" # working directory
     PS1+="\$(prompt_git \"$white on $cyan\")" # git repository details
+    PS1+="\$(prompt_svn \"$white on $cyan\")" # svn repository details
     PS1+="\n"
     PS1+="\[$reset$white\]\$ \[$reset\]" # $ (and reset color)
 
