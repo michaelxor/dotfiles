@@ -32,6 +32,10 @@ prompt_svn() {
                 s="$s-";
             fi
 
+            if [ ! -z "$(svn st $branchRoot | grep ^M)" ]; then
+                s="$sM";
+            fi
+
             if [ ! -z "$(svn st $branchRoot | grep ^?)" ]; then
                 s="$s?";
             fi
