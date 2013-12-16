@@ -15,29 +15,33 @@ prompt_svn() {
     local s=""
     local branchName=""
 
-    repo_root=`svn info 2> /dev/null | grep ^URL | sed -Ee 's,.*(http.*com)/([^/]*)(/(trunk|branches/([^/]*)))?.*,\1,'`
-    if [ ! -z "${repo_root}" ]; then
-        repo=`svn info 2> /dev/null | grep ^URL | sed -Ee 's,.*(http.*com)/([^/]*)(/(trunk|branches/([^/]*)))?.*,\2,'`
-        branchName=`svn info | grep ^URL | sed -Ee 's,.*(http.*com)/([^/]*)(/(trunk|branches/([^/]*)))?.*,\4,'`
+    repo=`svn info 2> /dev/null | grep ^URL | sed -Ee 's,.*(http.*com)/([^/]*)(/(trunk|branches/([^/]*)))?.*,\2,'`
+    if [ ! -z "${repo}" ]; then
+        branchName=`pwd | sed -Ee 's,.*/'${repo}'(/(trunk|branches/([^/]*)))?.*,\2,'`
 
         if [ ! -z "${branchName}" ]; then
             branchNameFriendly=`echo ${branchName} | sed -Ee 's,(branches/)?(.*),\2,'`
             branchRoot=`pwd | sed -Ee 's,(.*/'${repo}'/'${branchName}')(/.*)?,\1,'`
+            svnStatus=`svn st $branchRoot`
 
-            if [ ! -z "$(svn st $branchRoot | grep ^A)" ]; then
-                s="$s+";
+            if [ ! -z "$(echo "$svnStatus" | grep ^A)" ]; then
+                s="${s}A";
             fi
 
-            if [ ! -z "$(svn st $branchRoot | grep ^D)" ]; then
-                s="$s-";
+            if [ ! -z "$(echo "$svnStatus" | grep ^D)" ]; then
+                s="${s}D";
             fi
 
-            if [ ! -z "$(svn st $branchRoot | grep ^M)" ]; then
-                s="$sM";
+            if [ ! -z "$(echo "$svnStatus" | grep ^M)" ]; then
+                s="${s}M";
             fi
 
-            if [ ! -z "$(svn st $branchRoot | grep ^?)" ]; then
-                s="$s?";
+            if [ ! -z "$(echo "$svnStatus" | grep ^?)" ]; then
+                s="${s}?";
+            fi
+
+            if [ ! -z "$(echo "$svnStatus" | grep ^!)" ]; then
+                s="${s}!";
             fi
 
             [ -n "$s" ] && s=" [$s]"
