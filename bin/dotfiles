@@ -1,8 +1,9 @@
 #!/bin/bash
 
+GITHUB_USER="michaelxor"
 DOTFILES_DIRECTORY="${HOME}/.dotfiles"
-DOTFILES_TARBALL_PATH="https://github.com/michaelxor/dotfiles/tarball/master"
-DOTFILES_GIT_REMOTE="git@github.com:michaelxor/dotfiles.git"
+DOTFILES_TARBALL_PATH="https://github.com/${GITHUB_USER}/dotfiles/tarball/master"
+DOTFILES_GIT_REMOTE="git@github.com:${GITHUB_USER}/dotfiles.git"
 
 # If missing, download and extract the dotfiles repository
 if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then
@@ -119,19 +120,27 @@ mirrorfiles() {
         rm -rf "${HOME}/.vim"
     fi
 
+    # Force remove the svn config if it's already there.
+    if [ -e "${HOME}/.subversion/config" ]; then
+        rm -rf "${HOME}/.subversion/config"
+        rm -rf "${HOME}/.subversion/svn-diffwrap.sh"
+    fi
+
+
     # Create the necessary symbolic links between the `.dotfiles` and `HOME`
     # directory. The `bash_profile` sources other files directly from the
     # `.dotfiles` repository.
-    link "shell/bashrc"       ".bashrc"
-    link "shell/bash_profile" ".bash_profile"
-    link "shell/curlrc"       ".curlrc"
-    link "shell/inputrc"      ".inputrc"
-    link "git/gitattributes"  ".gitattributes"
-    link "git/gitignore"      ".gitignore"
-    link "vim"                ".vim"
-    link "vim/gvimrc"         ".gvimrc"
-    link "vim/vimrc"          ".vimrc"
-
+    link "shell/bashrc"        ".bashrc"
+    link "shell/bash_profile"  ".bash_profile"
+    link "shell/curlrc"        ".curlrc"
+    link "shell/inputrc"       ".inputrc"
+    link "git/gitattributes"   ".gitattributes"
+    link "git/gitignore"       ".gitignore"
+    link "vim"                 ".vim"
+    link "vim/gvimrc"          ".gvimrc"
+    link "vim/vimrc"           ".vimrc"
+    link "svn/config"          ".subversion/config"
+    link "bin/svn-diffwrap.sh" ".subversion/svn-diffwrap.sh"
     e_success "Dotfiles update complete!"
 }
 
