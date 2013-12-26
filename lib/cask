@@ -15,7 +15,7 @@ run_cask() {
         [[ $? ]] && e_success "Done"
 
         # install homebrew cask
-        if [[ ! formula_exists "brew-cask" ]]; then
+        if ! formula_exists "brew-cask"; then
             e header "Installing Homebrew Cask..."
             brew tap phinze/homebrew-cask
             brew install brew-cask
