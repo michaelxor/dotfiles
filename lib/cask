@@ -1,0 +1,70 @@
+#!/bin/bash
+
+run_cask() {
+
+    # Check for Homebrew
+    if type_exists 'brew'; then
+        e_header "Updating Homebrew..."
+        # Use the latest version of Homebrew
+        brew update
+        [[ $? ]] && e_success "Done"
+
+        e_header "Updating any existing Homebrew formulae..."
+        # Upgrade any already-installed formulae
+        brew upgrade
+        [[ $? ]] && e_success "Done"
+
+        # install homebrew cask
+        if [[ ! formula_exists "brew-cask" ]]; then
+            e header "Installing Homebrew Cask..."
+            brew tap phinze/homebrew-cask
+            brew install brew-cask
+        fi
+
+        e_header "Checking status of desired Cask applications..."
+        local list_apps
+        local -a missing_apps
+        local -a desired_apps=(
+            'google-chrome'
+            'firefox'
+            'alfred'   # spotlight on steroids
+            'dropbox'  # sync
+            'droplr'   # easy screenshots
+            'iterm2'   # terminal
+            'dash'     # awesome docs
+#            'sublime-text'  # cask installs ST2 instead of ST3
+#            'sequel-pro'    # great DB admin
+        )
+
+        for index in ${!desired_apps[*]}
+        do
+            if [[ ! app_exists ${desired_apps[$index]} ]]; then
+                # Store the name (and options) of every missing formula
+                missing_apps=("${missing_apps[@]}" "${desired_apps[$index]}")
+            fi
+        done
+
+        if [[ "$missing_apps" ]]; then
+            # Convert the array of missing formula into a list of space-separate strings
+            list_apps=$( printf "%s " "${missing_apps[@]}" )
+
+            e_header "Installing missing Cask applications..."
+            # Install all missing apps
+            brew cask install $list_apps
+
+            [[ $? ]] && e_success "Done"
+        fi
+
+        # make cask installed apps visible to alfred
+        brew cask alfred
+
+        # Remove outdated versions from the Cellar
+        brew cleanup
+    else
+        printf "\n"
+        e_error "Error: Homebrew not found."
+        printf "Aborting...\n"
+        exit
+    fi
+
+}

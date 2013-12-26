@@ -51,6 +51,10 @@ Options:
         <td><code>--no-sync</code></td>
         <td>Suppress pulling from the remote repository</td>
     </tr>
+    <tr>
+        <td><code>--no-apps</code></td>
+        <td>Suppress brew cask app updates</td>
+    </tr>
 </table>
 
 
@@ -75,6 +79,7 @@ Homebrew formulae:
 * rsync (latest version, rather than the out-dated OS X installation)
 * [tree](http://mama.indstate.edu/users/ice/tree/)
 * [wget](http://www.gnu.org/software/wget/)
+* [cask](https://github.com/phinze/homebrew-cask/)
 
 Node packages:
 
@@ -84,6 +89,16 @@ Node packages:
 * [jshint](http://www.jshint.com/)
 * [karma](http://karma-runner.github.io/)
 * [yo](http://yeoman.io/)
+
+Homebrew Cask apps:
+
+* [google-chrome](https://www.google.com/intl/en/chrome/browser/)
+* [firefox](https://www.mozilla.org/en-US/firefox/new/)
+* [alfred](http://www.alfredapp.com/)
+* [dropbox](https://www.dropbox.com)
+* [droplr](https://droplr.com/)
+* [iterm2](http://www.iterm2.com/)
+* [dash](http://kapeli.com/dash)
 
 Vim plugins:
 
@@ -151,6 +166,33 @@ following way:
     <tr>
         <td><code>$</code></td>
         <td>Stashed files</td>
+    </tr>
+</table>
+
+When your current working directory is an SVN repository, the prompt will
+display the checked-out branch's name. The state of the working tree is reflected in the
+following way:
+
+<table>
+    <tr>
+        <td><code>A</code></td>
+        <td>Local added files</td>
+    </tr>
+    <tr>
+        <td><code>M</code></td>
+        <td>Local modifications</td>
+    </tr>
+    <tr>
+        <td><code>D</code></td>
+        <td>Local deleted files</td>
+    </tr>
+    <tr>
+        <td><code>?</code></td>
+        <td>Untracked files</td>
+    </tr>
+    <tr>
+        <td><code>!</code></td>
+        <td>Conflicted files</td>
     </tr>
 </table>
 

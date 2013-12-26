@@ -23,7 +23,9 @@ source ./lib/help
 source ./lib/list
 source ./lib/utils
 source ./lib/brew
+source ./lib/cask
 source ./lib/npm
+source ./lib/python
 
 # Help text
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -43,6 +45,7 @@ do
     case $opt in
         --no-packages) no_packages=true ;;
         --no-sync) no_sync=true ;;
+        --no-apps) no_apps=true ;;
         -*|--*) e_warning "Warning: invalid option $opt" ;;
     esac
 done
@@ -104,6 +107,14 @@ else
     run_npm
 fi
 
+# Install new apps
+if [[ $no_apps ]]; then
+    printf "Skipped app installations.\n"
+else
+    printf "Updating apps...\n"
+    run_cask
+fi
+
 link() {
     # Force create/replace the symlink.
     ln -fs "${DOTFILES_DIRECTORY}/${1}" "${HOME}/${2}"
@@ -153,6 +164,15 @@ if is_confirmed; then
 else
     printf "Aborting...\n"
     exit 1
+fi
+
+# Ask before potentially overwriting files
+seek_confirmation "Would you like to create a clean python virtualenv?"
+
+if is_confirmed; then
+    run_venv
+else
+    printf "Skipped python virtualevn setup...\n"
 fi
 
 # Ask before potentially overwriting OS X defaults

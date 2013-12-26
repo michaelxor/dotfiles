@@ -61,3 +61,15 @@ formula_exists() {
     e_warning "Missing formula: $1"
     return 1
 }
+
+# Test whether a Homebrew Cask app is already installed
+# $1 - app name (may include options)
+app_exists() {
+    if $(brew cask list $1 >/dev/null); then
+        printf "%s already installed.\n" "$1"
+        return 0
+    fi
+
+    e_warning "Missing formula: $1"
+    return 1
+}

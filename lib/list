@@ -4,8 +4,6 @@ run_list() {
 
 cat <<EOT
 
-OS X dotfiles - Nicolas Gallagher - http://nicolasgallagher.com/
-
 Additional software to install
 
 Browsers:
@@ -20,11 +18,14 @@ Development:
     ImageOptim
     VirtualBox
     XAMPP
+    Sublime Text
+    Sequel Pro
 
 Other:
     Alfred
     Divvy
     Dropbox
+    Droplr
     Flux
     KeePassX
     LimeChat
