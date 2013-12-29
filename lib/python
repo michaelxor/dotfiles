@@ -1,6 +1,6 @@
 #!/bin/bash
 
-run_venv() {
+run_python() {
 
     # Check for Python
     if type_exists 'python'; then
@@ -11,7 +11,8 @@ run_venv() {
 
         # Force remove the pymordial directory if it's already there.
         if [ -e "${INITIAL_ENV}" ]; then
-            rm -rf "${INITIAL_ENV}"
+            printf "pymordial virtualenv already exists, skipping..."
+            return
         fi
 
         # Options for your first environment:
