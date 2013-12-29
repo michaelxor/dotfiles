@@ -1,0 +1,9 @@
+google-chrome
+firefox
+alfred
+droplr
+iterm2
+sublime-text
+dash
+sequel-pro
+dropbox
