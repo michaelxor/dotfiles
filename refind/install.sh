@@ -18,6 +18,13 @@ run_refind() {
         fi
     fi
 
+    # we'll just do this all in a refind dir for now
+    REFIND_DIR=${HOME}/refind
+    if [[ ! -e ${REFIND_DIR} ]]; then
+        mkdir ${REFIND_DIR}
+    fi
+    cd ${REFIND_DIR}
+
     REFIND_VERSION=0.7.6
     LOCAL_NAME=refind-bin-${REFIND_VERSION}.zip
     URL_BASE=http://downloads.sourceforge.net/project/refind/${REFIND_VERSION}/refind-bin-${REFIND_VERSION}.zip
@@ -51,7 +58,7 @@ run_refind() {
 
     # run the install script
     e_header "Running rEFInd install script..."
-    source ./${UNZIPPED_NAME}/install.sh ${REFIND_OPTS}
+    ./${UNZIPPED_NAME}/install.sh ${REFIND_OPTS}
 }
 
 source ${HOME}/.dotfiles/lib/utils

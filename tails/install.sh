@@ -35,7 +35,7 @@ run_tails() {
 
     if [[ ! -e tails-i386-${TAILS_VERSION}.iso ]]; then
         e_header "Downloading Tails ${TAILS_VERSION}..."
-        curl -LO $ISO_URL_BASE
+        wget $ISO_URL_BASE
     fi
 
     if [[ ! -e tails-i386-${TAILS_VERSION}.iso.sig ]]; then
@@ -57,9 +57,15 @@ run_tails() {
     seek_confirmation "Would you like to continue with this ISO?"
 
     if is_confirmed; then
-        if [[ ! -e tails-i386-${TAILS_VERSION}.dmg ]]; then
-            e_header "Converting ISO to IMG"
-            hdiutil convert tails-i386-${TAILS_VERSION}.iso -format UDRW -o tails-i386-${TAILS_VERSION}
+        # download the isohybrid utility
+        if [[ ! -e syslinux_4.02+dfsg.orig.tar.gz ]]; then
+            e_header "Downloading isohybrid utility to format ISO..."
+            curl -LO http://ftp.debian.org/debian/pool/main/s/syslinux/syslinux_4.02+dfsg.orig.tar.gz
+
+            e_header "Formatting ISO..."
+            tar xzf syslinux_4.02+dfsg.orig.tar.gz
+            UNTARRED_NAME=$(tar tzf syslinux_4.02+dfsg.orig.tar.gz | sed -e 's,/.*,,' | uniq)
+            perl ${UNTARRED_NAME}/utils/isohybrid.pl tails-i386-${TAILS_VERSION}.iso
         fi
 
         e_header "Listing Drives:"
@@ -76,7 +82,7 @@ run_tails() {
             diskutil unmountDisk ${DRIVE}
 
             e_header "Copying Tails ${TAILS_VERSION} image to drive..."
-            sudo dd if=tails-i386-${TAILS_VERSION}.dmg of=${DRIVE} bs=1m
+            sudo dd if=tails-i386-${TAILS_VERSION}.iso of=${DRIVE} bs=1m
 
             e_header "Ejecting drive..."
             diskutil eject ${DRIVE}
