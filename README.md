@@ -64,13 +64,13 @@ Options:
 
 Homebrew formulae:
 
-* GNU core utilities
+* [GNU core utilities](http://www.gnu.org/software/coreutils/)
 * [git](http://git-scm.com/)
 * [ack](http://betterthangrep.com/)
 * bash (latest version)
 * [bash-completion](http://bash-completion.alioth.debian.org/)
-* ffmpeg
-* graphicsmagick
+* [ffmpeg](http://ffmpeg.org/)
+* [graphicsmagick](http://www.graphicsmagick.org/)
 * jpeg
 * [macvim](http://code.google.com/p/macvim/)
 * [node](http://nodejs.org/)
@@ -79,7 +79,9 @@ Homebrew formulae:
 * rsync (latest version, rather than the out-dated OS X installation)
 * [tree](http://mama.indstate.edu/users/ice/tree/)
 * [wget](http://www.gnu.org/software/wget/)
-* [cask](https://github.com/phinze/homebrew-cask/)
+* [grc](http://korpus.juls.savba.sk/~garabik/software/grc.html)
+* [spark](http://zachholman.com/spark/)
+* [cask](https://github.com/phinze/homebrew-cask/) (If installing apps via Homebrew Cask)
 
 Node packages:
 
@@ -99,6 +101,8 @@ Homebrew Cask apps:
 * [droplr](https://droplr.com/)
 * [iterm2](http://www.iterm2.com/)
 * [dash](http://kapeli.com/dash)
+* [sublime-text](http://www.sublimetext.com/2)
+* [sequel-pro](http://www.sequelpro.com/)
 
 Vim plugins:
 

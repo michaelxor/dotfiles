@@ -172,7 +172,7 @@ seek_confirmation "Would you like to create a clean python virtualenv?"
 if is_confirmed; then
     run_venv
 else
-    printf "Skipped python virtualevn setup...\n"
+    printf "Skipped python virtualenv setup...\n"
 fi
 
 # Ask before potentially overwriting OS X defaults
