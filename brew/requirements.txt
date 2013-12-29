@@ -1,0 +1,14 @@
+coreutils
+git
+ack
+bash
+bash-completion
+ffmpeg
+graphicsmagick
+jpeg
+macvim --override-system-vim
+optipng
+phantomjs
+tree
+wget
+grc
