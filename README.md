@@ -74,6 +74,17 @@ Each component has an associated <code>requirements.txt</code> file.
 Add or remove packages from these files and the associated package
 manager will install and update accordingly.
 
+Any file named <code>*.bash</code> inside of a component folder will be
+automatically picked up loaded into your environment.  I'm following Zach
+Holman's approach as follows:
+
+* **topic/\*.bash**: Any files ending in `.bash` get loaded into your
+  environment.
+* **topic/path.bash**: Any file named `path.bash` is loaded first and is
+  expected to setup `$PATH` or similar.
+* **topic/completion.bash**: Any file named `completion.bash` is loaded
+  last and is expected to setup autocomplete.
+
 ### Homebrew
 
 Homebrew is recommended as most of the other components depend on utilities
@@ -81,6 +92,7 @@ installed during this step.
 
 * [GNU core utilities](http://www.gnu.org/software/coreutils/)
 * [git](http://git-scm.com/)
+* [svn](http://subversion.apache.org/)
 * [ack](http://betterthangrep.com/)
 * bash (latest version)
 * [bash-completion](http://bash-completion.alioth.debian.org/)
@@ -146,7 +158,6 @@ for virtualenvwrapper to make working with projects a little easier.
 * [virtualenv](http://www.virtualenv.org/en/latest/)
 * [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/)
 * [django](https://www.djangoproject.com/)
-* [numpy](http://www.numpy.org/)
 
 ## Other Features
 

@@ -25,10 +25,6 @@ cd "${DOTFILES_DIRECTORY}"
 source ./lib/help
 source ./lib/list
 source ./lib/utils
-#source ./lib/brew
-#source ./lib/cask
-#source ./lib/npm
-#source ./lib/python
 
 # Help text
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
