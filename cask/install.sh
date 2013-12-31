@@ -21,7 +21,7 @@ run_cask() {
             if ! app_exists "$p"; then
                 missing_apps=("${missing_apps[@]}" "$p")
             fi
-        done < ${PWD}/requirements.txt
+        done < requirements.txt
 
         if [[ "$missing_apps" ]]; then
             # Convert the array of missing apps into a list of space-separate strings
@@ -44,7 +44,5 @@ run_cask() {
         exit
     fi
 }
-
-source ../lib/utils
 
 run_cask

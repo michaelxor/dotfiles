@@ -23,14 +23,12 @@ run_node() {
     fi
 
     if type_exists 'npm'; then
-        e_header "Installing Node.js packages..."
-
         # Check desired homebrew formulae & install missing
         e_header "Reading desired packages from ${PWD##*/}/requirements.txt..."
         local  packages
         while read p; do
             packages="$packages $p"
-        done < ${PWD}/requirements.txt
+        done < requirements.txt
 
         # Install packages globally and quietly
         npm install $packages --global --quiet
@@ -44,7 +42,5 @@ run_node() {
     fi
 
 }
-
-source ../lib/utils
 
 run_node

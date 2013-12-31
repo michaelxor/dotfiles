@@ -25,7 +25,7 @@ run_brew() {
             if ! formula_exists $p; then
                 missing_formulae=("${missing_formulae[@]}" "$p")
             fi
-        done < ${PWD}/requirements.txt
+        done < requirements.txt
 
         if [[ "$missing_formulae" ]]; then
             # Convert the array of missing formulae into a list of space-separate strings
@@ -52,8 +52,6 @@ run_brew() {
         exit
     fi
 }
-
-source ../lib/utils
 
 # install homebrew
 if ! type_exists 'brew'; then
