@@ -15,7 +15,27 @@ fi
 # are already added to the PATH.
 [ -r $HOME/.dotfilesrc ] && source $HOME/.dotfilesrc;
 
+
 load_dotfiles() {
+    # load up any component-based bash config files
+    # thanks to Sorpigal & SO for this
+    # http://stackoverflow.com/a/7039579/901717
+    config_files=()
+    while IFS= read -d $'\0' -r file ; do
+        if [[ -r "$file" ]]; then
+            config_files=("${config_files[@]}" "$file")
+        fi
+    done < <(find "$HOME/.dotfiles" -iname "*.bash" -print0)
+
+    # source per-componenet path updates first
+    for file in "${config_files[@]}"
+    do
+        if [[ "${file##*/}" =~ "path.bash" && -r "${file}" ]]; then
+            source "${file}"
+        fi
+    done
+
+    # if these files are readable, source them
     declare -a files=(
         $HOME/.rvm/scripts/rvm # Load RVM into a shell session *as a function*
         $HOME/.dotfiles/shell/bash_options # Options
@@ -27,12 +47,26 @@ load_dotfiles() {
         $(brew --prefix)/etc/bash_completion # Bash completion (installed via Homebrew)
         $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
     )
-
-    # if these files are readable, source them
     for index in ${!files[*]}
     do
         if [[ -r ${files[$index]} ]]; then
             source ${files[$index]}
+        fi
+    done
+
+    # source any other per-comonenet bash config next, except path & completions
+    for file in "${config_files[@]}"
+    do
+        if [[ ! "${file##*/}" =~ "path.bash" && ! "${file##*/}" =~ "completion.bash" && -r "$file" ]]; then
+            source "${file}"
+        fi
+    done
+
+    # load completions last
+    for file in "${config_files[@]}"
+    do
+        if [[ "${file##*/}" =~ "completion.bash" && -r "$file" ]]; then
+            source "${file}"
         fi
     done
 }

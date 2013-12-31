@@ -6,26 +6,29 @@ DOTFILES_TARBALL_PATH="https://github.com/${GITHUB_USER}/dotfiles/tarball/master
 DOTFILES_GIT_REMOTE="git@github.com:${GITHUB_USER}/dotfiles.git"
 
 # If missing, download and extract the dotfiles repository
-if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then
+if [[ ! -d "${DOTFILES_DIRECTORY}" ]]; then
     printf "$(tput setaf 7)Downloading dotfiles...\033[m\n"
-    mkdir ${DOTFILES_DIRECTORY}
+    mkdir "${DOTFILES_DIRECTORY}"
+
     # Get the tarball
-    curl -fsSLo ${HOME}/dotfiles.tar.gz ${DOTFILES_TARBALL_PATH}
+    curl -fsSLo "${HOME}/dotfiles.tar.gz" "${DOTFILES_TARBALL_PATH}"
+
     # Extract to the dotfiles directory
-    tar -zxf ${HOME}/dotfiles.tar.gz --strip-components 1 -C ${DOTFILES_DIRECTORY}
+    tar -zxf "${HOME}/dotfiles.tar.gz" --strip-components 1 -C "${DOTFILES_DIRECTORY}"
+
     # Remove the tarball
-    rm -rf ${HOME}/dotfiles.tar.gz
+    rm -rf "${HOME}/dotfiles.tar.gz"
 fi
 
-cd ${DOTFILES_DIRECTORY}
+cd "${DOTFILES_DIRECTORY}"
 
 source ./lib/help
 source ./lib/list
 source ./lib/utils
-source ./lib/brew
-source ./lib/cask
-source ./lib/npm
-source ./lib/python
+#source ./lib/brew
+#source ./lib/cask
+#source ./lib/npm
+#source ./lib/python
 
 # Help text
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -45,7 +48,9 @@ do
     case $opt in
         --no-packages) no_packages=true ;;
         --no-sync) no_sync=true ;;
-        --no-apps) no_apps=true ;;
+        --no-cask) no_cask=true ;;
+        --no-node) no_node=true ;;
+        --no-py) no_py=true ;;
         -*|--*) e_warning "Warning: invalid option $opt" ;;
     esac
 done
@@ -76,7 +81,7 @@ fi
 if ! is_git_repo; then
     e_header "Initializing git repository..."
     git init
-    git remote add origin ${DOTFILES_GIT_REMOTE}
+    git remote add origin "${DOTFILES_GIT_REMOTE}"
     git fetch origin master
     # Reset the index and working tree to the fetched HEAD
     # (submodules are cloned in the subsequent sync step)
@@ -96,23 +101,52 @@ else
     git submodule update --recursive --init --quiet
 fi
 
-# Install and update packages
+# brew
 if [[ $no_packages ]]; then
-    printf "Skipped package installations.\n"
+    printf "Skipped brew package installations and updates.\n"
 else
-    printf "Updating packages...\n"
-    # Install Homebrew formulae
-    run_brew
-    # Install Node packages
-    run_npm
+    if [[ -r "brew/install.sh" ]]; then
+        printf "Updating brew packages...\n"
+        cd brew
+        source install.sh
+        cd "${DOTFILES_DIRECTORY}"
+    fi
 fi
 
-# Install new apps
-if [[ $no_apps ]]; then
+# cask
+if [[ $no_cask ]]; then
     printf "Skipped app installations.\n"
 else
-    printf "Updating apps...\n"
-    run_cask
+    if [[ -r "cask/install.sh" ]]; then
+        printf "Updating cask apps...\n"
+        cd cask
+        source install.sh
+        cd "${DOTFILES_DIRECTORY}"
+    fi
+fi
+
+# node
+if [[ $no_node ]]; then
+    printf "Skipped node installations and updates.\n"
+else
+    if [[ -r "node/install.sh" ]]; then
+        printf "Updating node packages...\n"
+        cd node
+        source install.sh
+        cd "${DOTFILES_DIRECTORY}"
+    fi
+fi
+
+# python
+if [[ $no_python ]]; then
+    printf "Skipped python installation and updates.\n"
+else
+    if [[ -r "python/install.sh" ]]; then
+        printf "Updating python packages...\n"
+        cd python
+        source install.sh
+        cd "${DOTFILES_DIRECTORY}"
+    fi
 fi
 
 link() {
@@ -124,7 +158,7 @@ mirrorfiles() {
     # Copy `.gitconfig`.
     # Any global git commands in `~/.bash_profile.local` will be written to
     # `.gitconfig`. This prevents them being committed to the repository.
-    rsync -avz --quiet ${DOTFILES_DIRECTORY}/git/gitconfig  ${HOME}/.gitconfig
+    rsync -avz --quiet "${DOTFILES_DIRECTORY}/git/gitconfig"  "${HOME}/.gitconfig"
 
     # Force remove the vim directory if it's already there.
     if [ -e "${HOME}/.vim" ]; then
@@ -155,6 +189,7 @@ mirrorfiles() {
     e_success "Dotfiles update complete!"
 }
 
+
 # Ask before potentially overwriting files
 seek_confirmation "Warning: This step may overwrite your existing dotfiles."
 
@@ -166,14 +201,6 @@ else
     exit 1
 fi
 
-# Ask before potentially overwriting files
-seek_confirmation "Would you like to create a clean python virtualenv?"
-
-if is_confirmed; then
-    run_venv
-else
-    printf "Skipped python virtualenv setup...\n"
-fi
 
 # Ask before potentially overwriting OS X defaults
 seek_confirmation "Warning: This step may modify your OS X system defaults."
