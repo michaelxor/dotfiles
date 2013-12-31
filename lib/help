@@ -3,20 +3,25 @@
 run_help() {
 
 cat <<EOT
-OS X dotfiles - Nicolas Gallagher - http://nicolasgallagher.com/
+OS X dotfiles - Michael Hofer - http://micahelxor.com/
 
 Usage: $(basename "$0") [options]
 
 Options:
     -h, --help      Print this help text
-    -l, --list      Print a list of additional software to install
-    --no-packages   Suppress package updates
+    -l, --list      Lists tools to be installed by the dotfiles script
     --no-sync       Suppress pulling from the remote repository
+    --no-packages   Suppress package updates
+    --no-cask       Suppress Homebrew Cask install
+    --no-node       Suppress Node.js install
+    --no-py         Suppress python install
 
-Documentation can be found at https://github.com/necolas/dotfiles/
+Documentation can be found at https://github.com/michaelxor/dotfiles/
 
 Copyright (c) Nicolas Gallagher
 Licensed under the MIT license.
+
+Modified by Michael Hofer
 EOT
 
 }

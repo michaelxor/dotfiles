@@ -2,37 +2,26 @@
 
 run_list() {
 
-cat <<EOT
+    printf "\nHere is a list of items that will be installed:\n"
 
-Additional software to install
+    e_header "Homebrew Tools:"
+    while read p; do
+        printf "\t$p\n"
+    done < ${DOTFILES_DIRECTORY}/brew/requirements.txt
 
-Browsers:
-    Firefox
-    Google Chrome
-    Opera
+    e_header "Homebrew Cask Apps:"
+    while read p; do
+        printf "\t$p\n"
+    done < ${DOTFILES_DIRECTORY}/cask/requirements.txt
 
-Development:
-    Filezilla
-    iTerm 2
-    ImageAlpha
-    ImageOptim
-    VirtualBox
-    XAMPP
-    Sublime Text
-    Sequel Pro
+    e_header "Node.js Packages (global install):"
+    while read p; do
+        printf "\t$p\n"
+    done < ${DOTFILES_DIRECTORY}/node/requirements.txt
 
-Other:
-    Alfred
-    Divvy
-    Dropbox
-    Droplr
-    Flux
-    KeePassX
-    LimeChat
-    Network Connect
-    Skype
-    uTorrent
-    VLC
-EOT
+    e_header "Python Packages:"
+    while read p; do
+        printf "\t$p\n"
+    done < ${DOTFILES_DIRECTORY}/python/requirements.txt
 
 }

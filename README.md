@@ -1,6 +1,8 @@
 # Dotfiles (adopted from Nicolas Gallagher)
 
-My OS X dotfiles.
+I forked Nicolas Gallagher's [dotfiles](https://github.com/necolas/dotfiles),
+and merged them with Zach Holman's [dotfiles](https://github.com/holman/dotfiles)
+which is a more component based approach.
 
 
 ## How to install
@@ -24,7 +26,7 @@ You should run the update when:
 * You make a change to `~/.dotfiles/git/gitconfig` (the only file that is
   copied rather than symlinked).
 * You want to pull changes from the remote repository.
-* You want to update Homebrew formulae and Node packages.
+* You want to update Homebrew formulae, Node packages, or Python packages.
 
 Run the dotfiles command:
 
@@ -41,28 +43,41 @@ Options:
     </tr>
     <tr>
         <td><code>-l</code>, <code>--list</code></td>
-        <td>List of additional applications to install</td>
-    </tr>
-    <tr>
-        <td><code>--no-packages</code></td>
-        <td>Suppress package updates</td>
+        <td>List of tools installed by the dotfiles script</td>
     </tr>
     <tr>
         <td><code>--no-sync</code></td>
         <td>Suppress pulling from the remote repository</td>
     </tr>
     <tr>
-        <td><code>--no-apps</code></td>
-        <td>Suppress brew cask app updates</td>
+        <td><code>--no-packages</code></td>
+        <td>Suppress Homebrew package updates</td>
+    </tr>
+    <tr>
+        <td><code>--no-cask</code></td>
+        <td>Suppress Homebrew Cask intall</td>
+    </tr>
+    <tr>
+        <td><code>--no-node</code></td>
+        <td>Suppress Node.js install &amp; npm package updates</td>
+    </tr>
+    <tr>
+        <td><code>--no-py</code></td>
+        <td>Suppress Python install &amp; pip package updates</td>
     </tr>
 </table>
 
 
-## Features
+## Components
 
-### Automatic software installation
+Each component has an associated <code>requirements.txt</code> file.
+Add or remove packages from these files and the associated package
+manager will install and update accordingly.
 
-Homebrew formulae:
+### Homebrew
+
+Homebrew is recommended as most of the other components depend on utilities
+installed during this step.
 
 * [GNU core utilities](http://www.gnu.org/software/coreutils/)
 * [git](http://git-scm.com/)
@@ -73,26 +88,27 @@ Homebrew formulae:
 * [graphicsmagick](http://www.graphicsmagick.org/)
 * jpeg
 * [macvim](http://code.google.com/p/macvim/)
-* [node](http://nodejs.org/)
 * [optipng](http://optipng.sourceforge.net/)
 * [phantomjs](http://phantomjs.org/)
 * rsync (latest version, rather than the out-dated OS X installation)
 * [tree](http://mama.indstate.edu/users/ice/tree/)
 * [wget](http://www.gnu.org/software/wget/)
 * [grc](http://korpus.juls.savba.sk/~garabik/software/grc.html)
-* [spark](http://zachholman.com/spark/)
-* [cask](https://github.com/phinze/homebrew-cask/) (If installing apps via Homebrew Cask)
 
-Node packages:
+Homebrew also installs each of the following unless their respective
+component is suppressed:
 
-* [bower](http://bower.io/)
-* [gify](https://github.com/visionmedia/node-gify)
-* [grunt-cli](http://gruntjs.com/)
-* [jshint](http://www.jshint.com/)
-* [karma](http://karma-runner.github.io/)
-* [yo](http://yeoman.io/)
+* [cask](https://github.com/phinze/homebrew-cask/)
+* [node](http://nodejs.org/)
+* [python](http://www.python.org/)
+* python3
 
-Homebrew Cask apps:
+### Homebrew Cask
+
+Homebrew Cask can install Mac GUI applications.  Apps installed this way
+are collected in <code>/opt/homebrew-cask/Caskroom</code> instead of
+<code>/Applications</code> or <code>~/Applications</code>.  If Alfred is
+installed, the Caskroom directory is automatically linked to Alfred so these apps will be indexed.
 
 * [google-chrome](https://www.google.com/intl/en/chrome/browser/)
 * [firefox](https://www.mozilla.org/en-US/firefox/new/)
@@ -104,7 +120,37 @@ Homebrew Cask apps:
 * [sublime-text](http://www.sublimetext.com/2)
 * [sequel-pro](http://www.sequelpro.com/)
 
-Vim plugins:
+### Node
+
+Node packages are installed via npm.  The packages in this list are
+installed globally, so you may want to keep this list to things you
+plan on using from the command line.
+
+* [bower](http://bower.io/)
+* [gify](https://github.com/visionmedia/node-gify)
+* [grunt-cli](http://gruntjs.com/)
+* [jshint](http://www.jshint.com/)
+* [karma](http://karma-runner.github.io/)
+* [yo](http://yeoman.io/)
+
+### Python
+
+The latest Python 2.x and 3.x branches are installed via Homebrew, and
+they are bundled with pip.  The contents of <code>requirements.txt</code>
+are then installed via pip to a new clean virtualenv.
+
+Pip and virtualenvwrapper are both configured to use ~/.virtualenvs as
+the default for new virtual environments, and there are a few useful hooks
+for virtualenvwrapper to make working with projects a little easier.
+
+* [virtualenv](http://www.virtualenv.org/en/latest/)
+* [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/)
+* [django](https://www.djangoproject.com/)
+* [numpy](http://www.numpy.org/)
+
+## Other Features
+
+### Vim plugins
 
 * [ctrlp.vim](https://github.com/kien/ctrlp.vim)
 * [html5.vim](https://github.com/othree/html5.vim)
@@ -312,3 +358,5 @@ Inspiration and code was taken from many sources, including:
   [https://github.com/cowboy/dotfiles](https://github.com/cowboy/dotfiles)
 * [@alrra](https://github.com/alrra) (Cãtãlin Mariş)
   [https://github.com/alrra/dotfiles](https://github.com/alrra/dotfiles)
+* [@holman](https://github.com/holman) (Zach Holman)
+  [https://github.com/holman/dotfiles](https://github.com/holman/dotfiles)
