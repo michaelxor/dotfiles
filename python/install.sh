@@ -2,56 +2,101 @@
 #
 # Python
 #
-# This will install Python 2.x and 3.x
+# This will install the latest python 2.x branch via
+# Homebrew, install virtualenv and virtualenvwrapper packages
+# globally via pip, then create a base virtual environment under
+# the branch and install the packages in requirements.txt
+#
+# todo: get pip / requirements working with the python 3.x
+#
+# alternate version that does not depend on virtualenvwrapper is
+# available here:
+# https://gist.github.com/michaelxor/8136225
 
 run_python() {
+    if type_exists "brew"; then
+        # install latest python 2.x and 3.x branches, if necessary
+        if ! formula_exists "python"; then
+            e_header "Installing Python 2.x..."
+            brew install python
 
-    # Check for Python
-    if type_exists 'python'; then
-        mkdir -p $HOME/virtualenvs
-
-        # Name your first "bootstrap" environment:
-        INITIAL_ENV=$HOME/virtualenvs/pymordial
-
-        # Force remove the pymordial directory if it's already there.
-        if [ -e "${INITIAL_ENV}" ]; then
-            printf "pymordial virtualenv already exists, skipping..."
-            return
+            # make sure we're using brew's python
+            brew link --overwrite python
         fi
 
-        # Options for your first environment:
-        ENV_OPTS=''
+        if ! formula_exists "python3"; then
+            e_header "Installing Python 3.x..."
+            brew install python3
 
-        # Set to whatever python interpreter you want for your first environment:
-        PYTHON=$(type -P python)
+            # make sure we're using brew's python3
+            brew link --overwrite python3
+        fi
 
-        # Latest virtualenv from pypa
-        URL_BASE=https://github.com/pypa/virtualenv/tarball/master
+        # make sure we're not in a virtualenv already
+        if [[ "$VIRTUAL_ENV" != "" ]]; then
+            deactivate
+        fi
 
-        # Name on local fs
-        TAR_NAME=virtualenv-tmp.tar.gz
+        # next, we'll install virtualenv and virtualenvwrapper,
+        # and create a couple base virtual environments
+        if ! pypackage_exists "virtualenv"; then
+            e_header "Installing virtualenv..."
+            pip install virtualenv
+        fi
 
-        e_header "Installing new python virtual environment to $INITIAL_ENV"
+        if ! pypackage_exists "virtualenvwrapper"; then
+            e_header "Installing virtualenvwrapper..."
+            pip install virtualenvwrapper
+        fi
 
-        # --- Real work starts here ---
-        curl -Lo $TAR_NAME $URL_BASE
-        tar xzf $TAR_NAME
+        # new envs
+        INITIAL_ENV="pymordial"
+        INITIAL_ENV_3="pymordial3"
 
-        # Discover the name of the untarred directory
-        UNTARRED_NAME=$(tar tzf $TAR_NAME | sed -e 's,/.*,,' | uniq)
+        # the first time we run this we'll need to source the
+        # included bash startup file
+        source config.bash
 
-        # Create the first "bootstrap" environment & install virtualenv
-        $PYTHON $UNTARRED_NAME/virtualenv.py $ENV_OPTS $INITIAL_ENV
-        $INITIAL_ENV/bin/pip install $TAR_NAME
+        # copy some default virtualenvwrapper hooks into the global hook dir
+        seek_confirmation "Warning: This step may overwrite your virtualenvwrapper hooks."
+        if is_confirmed; then
+            ln -fs ${HOME}/.dotfiles/python/virtualenvwrapper/* "${WORKON_HOME}/"
+        fi
 
-        # Don't need these anymore.
-        rm -rf $UNTARRED_NAME
-        rm -f $TAR_NAME
+        # create the 2.x virtualenv
+        if [[ ! $(workon | grep -e "^${INITIAL_ENV}$") ]]; then
+            e_header "Creating new virtualenv ${INITIAL_ENV}..."
+            mkvirtualenv ${INITIAL_ENV}
+        fi
+
+        # create the 3.x virtualenv
+        if [[ ! $(workon | grep -e "^${INITIAL_ENV_3}$") ]]; then
+            e_header "Creating new virtualenv ${INITIAL_ENV_3}..."
+            mkvirtualenv --python=python3 ${INITIAL_ENV_3}
+        fi
+
+        e_header "Updating pip for all virtual environments..."
+        allvirtualenv pip install -U pip
+
+        e_header "Updating packages for ${INITIAL_ENV}..."
+        workon ${INITIAL_ENV}
+        pip install -r requirements.txt
+
+        # i'm not especially clear on how pip works with python3.x...
+        # not seeing any packages come through with pip freeze
+        # e_header "Updating packages for ${INITIAL_ENV_3}..."
+        # workon ${INITIAL_ENV_3}
+        # pip install -r requirements.txt
+
+        deactivate
+        [[ $? ]] && e_success "Done"
     else
-        print "\n"
-        e_error "Error: python not found."
+        printf "\n"
+        e_error "Error: Homebrew not found."
         printf "Aborting...\n"
         exit
     fi
 
 }
+
+run_python
