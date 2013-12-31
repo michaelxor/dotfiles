@@ -1,5 +1,6 @@
 coreutils
 git
+svn
 ack
 bash
 bash-completion
