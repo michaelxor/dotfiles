@@ -131,6 +131,7 @@ installed, the Caskroom directory is automatically linked to Alfred so these app
 * [dash](http://kapeli.com/dash)
 * [sublime-text](http://www.sublimetext.com/2)
 * [sequel-pro](http://www.sequelpro.com/)
+* [skype](http://www.skype.com/en/)
 
 ### Node
 

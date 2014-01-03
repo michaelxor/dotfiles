@@ -7,3 +7,4 @@ sublime-text
 dash
 sequel-pro
 dropbox
+skype
