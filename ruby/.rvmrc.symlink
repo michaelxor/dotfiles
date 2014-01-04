@@ -1,0 +1,4 @@
+# RVM config
+
+# compile rubies and libraries as x86_64
+rvm_archflags="-arch x86_64"

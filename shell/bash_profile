@@ -13,7 +13,7 @@ fi
 # Not part of `load_dotfiles` because it must be sourced before anything else
 # to be sure that commands like `brew` (when installed in a custom location)
 # are already added to the PATH.
-[ -r $HOME/.dotfilesrc ] && source $HOME/.dotfilesrc;
+[ -r "$HOME/.dotfilesrc" ] && source "$HOME/.dotfilesrc";
 
 
 load_dotfiles() {
@@ -37,7 +37,6 @@ load_dotfiles() {
 
     # if these files are readable, source them
     declare -a files=(
-        $HOME/.rvm/scripts/rvm # Load RVM into a shell session *as a function*
         $HOME/.dotfiles/shell/bash_options # Options
         $HOME/.dotfiles/shell/bash_exports # Exports
         $HOME/.dotfiles/shell/bash_aliases # Aliases
