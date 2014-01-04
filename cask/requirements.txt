@@ -1,5 +1,4 @@
 google-chrome
-google-chrome-canary
 firefox
 alfred
 sizeup
