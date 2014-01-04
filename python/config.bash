@@ -3,6 +3,9 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Code
 source /usr/local/bin/virtualenvwrapper.sh
 
+# it looks like when we use the lazy wrapper we
+# can't call `allvirtualenv` until we've called
+# workon or something else
 #export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 #source /usr/local/bin/virtualenvwrapper_lazy.sh
 
@@ -33,3 +36,5 @@ venv_cd () {
 # Call check_virtualenv in case opening directly into a directory (e.g
 # when opening a new tab in Terminal.app).
 check_virtualenv
+
+alias cd="venv_cd"
