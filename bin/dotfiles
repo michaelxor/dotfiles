@@ -182,6 +182,20 @@ mirrorfiles() {
     link "vim/vimrc"           ".vimrc"
     link "svn/config"          ".subversion/config"
     link "bin/svn-diffwrap.sh" ".subversion/svn-diffwrap.sh"
+
+    # load up any component-based config files
+    # thanks to Sorpigal & SO for this
+    # http://stackoverflow.com/a/7039579/901717
+    config_files=()
+    while IFS= read -d $'\0' -r file ; do
+        if [[ -r "$file" ]]; then
+            rel_file="${file##$HOME/.dotfiles/}"
+            link_name="${file##*/}"
+            link_name="${link_name%.*}"
+            link "$rel_file" "$link_name"
+        fi
+    done < <(find "$HOME/.dotfiles" -iname "*.symlink" -print0)
+
     e_success "Dotfiles update complete!"
 }
 
