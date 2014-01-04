@@ -12,15 +12,15 @@ run_ruby() {
     if ! type_exists "rvm"; then
         e_header "Installing latest stable RVM & ruby..."
         curl -sSL https://get.rvm.io | bash -s stable $rvm_opts
-
-        # we'll need to source these the first time at least
-        source path.bash
-        source config.bash
     else
         # update RVM & ruby to latest stable
         e_header "Updating to latest stable RVM & ruby..."
         rvm get stable $rvm_opts
     fi
+
+    # we'll need to source these the first time at least
+    source path.bash
+    source config.bash
 
     # jump into default environment to install requirements
     rvm use

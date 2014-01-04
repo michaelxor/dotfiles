@@ -47,6 +47,7 @@ do
         --no-cask) no_cask=true ;;
         --no-node) no_node=true ;;
         --no-py) no_py=true ;;
+        --no-ruby) no_ruby=true ;;
         -*|--*) e_warning "Warning: invalid option $opt" ;;
     esac
 done
@@ -134,7 +135,7 @@ else
 fi
 
 # python
-if [[ $no_python ]]; then
+if [[ $no_py ]]; then
     printf "Skipped python installation and updates.\n"
 else
     if [[ -r "python/install.sh" ]]; then
@@ -144,6 +145,19 @@ else
         cd "${DOTFILES_DIRECTORY}"
     fi
 fi
+
+# ruby
+if [[ $no_ruby ]]; then
+    printf "Skipped ruby installation and updates.\n"
+else
+    if [[ -r "ruby/install.sh" ]]; then
+        printf "Updating ruby packages...\n"
+        cd ruby
+        source install.sh
+        cd "${DOTFILES_DIRECTORY}"
+    fi
+fi
+
 
 link() {
     # Force create/replace the symlink.
@@ -186,12 +200,16 @@ mirrorfiles() {
     # load up any component-based config files
     # thanks to Sorpigal & SO for this
     # http://stackoverflow.com/a/7039579/901717
-    config_files=()
     while IFS= read -d $'\0' -r file ; do
         if [[ -r "$file" ]]; then
+            # get the relative path for this file
             rel_file="${file##$HOME/.dotfiles/}"
+
+            # get the basename for the symlink
             link_name="${file##*/}"
             link_name="${link_name%.*}"
+
+            # link!
             link "$rel_file" "$link_name"
         fi
     done < <(find "$HOME/.dotfiles" -iname "*.symlink" -print0)

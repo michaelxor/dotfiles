@@ -65,6 +65,10 @@ Options:
         <td><code>--no-py</code></td>
         <td>Suppress Python install &amp; pip package updates</td>
     </tr>
+    <tr>
+        <td><code>--no-ruby</code></td>
+        <td>Suppress RVM/Ruby install &amp; gem updates</td>
+    </tr>
 </table>
 
 
@@ -75,15 +79,16 @@ Add or remove packages from these files and the associated package
 manager will install and update accordingly.
 
 Any file named <code>*.bash</code> inside of a component folder will be
-automatically picked up loaded into your environment.  I'm following Zach
-Holman's approach as follows:
+automatically picked up loaded into your environment.  I'm following [Zach Holman's approach](https://github.com/holman/dotfiles#components) as follows:
 
-* **topic/\*.bash**: Any files ending in `.bash` get loaded into your
+* **component/\*.bash**: Any files ending in `.bash` get loaded into your
   environment.
-* **topic/path.bash**: Any file named `path.bash` is loaded first and is
+* **component/path.bash**: Any file named `path.bash` is loaded first and is
   expected to setup `$PATH` or similar.
-* **topic/completion.bash**: Any file named `completion.bash` is loaded
+* **component/completion.bash**: Any file named `completion.bash` is loaded
   last and is expected to setup autocomplete.
+* **component/\*.symlink**: Will be symlinked to your home directory minus
+  the .symlink suffix.
 
 ### Homebrew
 
@@ -149,8 +154,10 @@ plan on using from the command line.
 ### Python
 
 The latest Python 2.x and 3.x branches are installed via Homebrew, and
-they are bundled with pip.  The contents of <code>requirements.txt</code>
-are then installed via pip to a new clean virtualenv.
+they are bundled with pip.  <code>virtualenv</code> and
+<code>virtualenvwrapper</code> are installed globally via pip.  The
+contents of <code>requirements.txt</code> are then installed via pip to
+a new clean virtualenv.
 
 Pip and virtualenvwrapper are both configured to use ~/.virtualenvs as
 the default for new virtual environments, and there are a few useful hooks
@@ -159,6 +166,15 @@ for virtualenvwrapper to make working with projects a little easier.
 * [virtualenv](http://www.virtualenv.org/en/latest/)
 * [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/)
 * [django](https://www.djangoproject.com/)
+
+### Ruby
+
+The latest stable RVM is installed with the latest Ruby.  The contents
+of <code>requirements.txt</code> are assumed to be gems and are installed
+to the default rvm environment.
+
+* [sass](http://sass-lang.com/)
+
 
 ## Other Features
 
