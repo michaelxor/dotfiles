@@ -138,6 +138,18 @@ installed, the Caskroom directory is automatically linked to Alfred so these app
 * [sequel-pro](http://www.sequelpro.com/)
 * [skype](http://www.skype.com/en/)
 
+As well as some really handy [Quick Look Plugins from Sindre Sorhus](https://github.com/sindresorhus/quick-look-plugins).
+
+* [qlcolorcode](https://code.google.com/p/qlcolorcode/)
+* [qlstephen](http://whomwah.github.io/qlstephen/)
+* [qlmarkdown](https://github.com/toland/qlmarkdown)
+* [quicklook-json](http://www.sagtau.com/quicklookjson.html)
+* [qlprettypatch](https://github.com/atnan/QLPrettyPatch)
+* [quicklook-csv](https://github.com/p2/quicklook-csv)
+* [betterzipql](http://macitbetter.com/BetterZip-Quick-Look-Generator/)
+* [webp-quicklook](https://github.com/dchest/webp-quicklook)
+* [suspicious-package](http://www.mothersruin.com/software/SuspiciousPackage/)
+
 ### Node
 
 Node packages are installed via npm.  The packages in this list are
@@ -203,7 +215,7 @@ $ osxdefaults
 
 ### Bootable backup-drive script
 
-These dotfiles include a script that uses `rync` to incrementally back up your
+These dotfiles include a script that uses `rsync` to incrementally back up your
 data to an external, bootable clone of your computer's internal drive. First,
 make sure that the value of `DST` in the `bin/backup` script matches the name
 of your backup-drive. Then run the following command:
@@ -301,8 +313,8 @@ export PATH
 # Git credentials
 # Not under version control to prevent people from
 # accidentally committing with your details
-GIT_AUTHOR_NAME="Nicolas Gallagher"
-GIT_AUTHOR_EMAIL="nicolas@example.com"
+GIT_AUTHOR_NAME="Michael Hofer"
+GIT_AUTHOR_EMAIL="michael@example.com"
 GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
 GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 # Set the credentials (modifies ~/.gitconfig)

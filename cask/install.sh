@@ -30,6 +30,12 @@ run_cask() {
             # Install all missing apps
             e_header "Installing missing Cask applications..."
             brew cask install $list_apps
+
+            # dumb way to guess if quicklook restart is necessary
+            if [[ $list_apps =~ "ql" || $list_apps =~ "quicklook" ]]; then
+                qlmanage -r
+            fi
+
             [[ $? ]] && e_success "Done"
         fi
 
