@@ -128,13 +128,15 @@ are collected in <code>/opt/homebrew-cask/Caskroom</code> instead of
 installed, the Caskroom directory is automatically linked to Alfred so these apps will be indexed.
 
 * [google-chrome](https://www.google.com/intl/en/chrome/browser/)
+* [google-chrome-canary](https://www.google.com/intl/en/chrome/browser/canary.html)
 * [firefox](https://www.mozilla.org/en-US/firefox/new/)
+* [firefox-aurora](http://www.mozilla.org/en-US/firefox/aurora/)
 * [alfred](http://www.alfredapp.com/)
 * [dropbox](https://www.dropbox.com)
 * [droplr](https://droplr.com/)
 * [iterm2](http://www.iterm2.com/)
 * [dash](http://kapeli.com/dash)
-* [sublime-text](http://www.sublimetext.com/2)
+* [sublime-text3](http://www.sublimetext.com/3)
 * [sequel-pro](http://www.sequelpro.com/)
 * [skype](http://www.skype.com/en/)
 

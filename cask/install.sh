@@ -12,6 +12,9 @@ run_cask() {
             e_header "Installing Homebrew Cask..."
             brew tap phinze/homebrew-cask
             brew install brew-cask
+
+            # this will give us access to beta versions, like Sublime Text 3
+            brew tap caskroom/versions
         fi
 
         # check desired cask applications & install missing

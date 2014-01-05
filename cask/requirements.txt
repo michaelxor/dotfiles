@@ -1,10 +1,12 @@
 google-chrome
+google-chrome-canary
 firefox
+firefox-aurora
 alfred
 sizeup
 droplr
 iterm2
-sublime-text
+sublime-text3
 dash
 sequel-pro
 dropbox
