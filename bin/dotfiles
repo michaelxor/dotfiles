@@ -212,7 +212,7 @@ mirrorfiles() {
             # link!
             link "$rel_file" "$link_name"
         fi
-    done < <(find "$HOME/.dotfiles" -iname "*.symlink" -print0)
+    done < <(find "$HOME/.dotfiles" \( -d 1 -iname "*.symlink" -or -d 2 -iname "*.symlink" \) -print0)
 
     e_success "Dotfiles update complete!"
 }
