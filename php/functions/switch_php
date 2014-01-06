@@ -8,7 +8,7 @@ switch_php() {
         if [[ $? -eq 0 ]]; then
             local full_version=$(php --version | head -1 | awk '{print $2}')
             local major_version=$(echo ${full_version%.*} | sed -e 's,\.,,g')
-            local php_module="$(brew --prefix)/Cellar/php${major_version}/${full_version}/libexec/apache2/libphp5.so"
+            local php_module="$(brew --prefix php${major_version})/libexec/apache2/libphp5.so"
             sed -Ee "s,^#?(LoadModule php5_module).*,\1 ${php_module}," /etc/apache2/httpd.conf > "$HOME/httpd.conf.bkp"
             sudo mv "$HOME/httpd.conf.bkp" /etc/apache2/httpd.conf
             sudo apachectl restart
