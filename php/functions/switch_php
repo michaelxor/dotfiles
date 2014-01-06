@@ -1,19 +1,18 @@
 #!/bin/bash
 
 # this assumes you're using apache & php-version
-# $1 major version (i.e. 5.4)
+# $1 version string passed to php-version
 switch_php() {
-    php_version_exists=$(type "php-version" | head -1 | grep "function")
-    if [[ ! -z php_version_exists ]]; then
+    if [[ $(type "php-version" 2> /dev/null) ]]; then
         php-version "$1"
-        # there's got to be a better way to get this number?
-        # this will fail for a version like 5.4.0RC8
-        local full_version=$(php-version | grep "\*" | sed -Ee 's,(.*\* )([0-9]+\.[0-9]+\.[0-9]+).*,\2,')
-        local major_version=$(echo $1 | sed -e 's,\.,,g')
-        local php_module="$(brew --prefix)/Cellar/php${major_version}/${full_version}/libexec/apache2/libphp5.so"
-        sed -Ee "s,^#?(LoadModule php5_module).*,\1 ${php_module}," /etc/apache2/httpd.conf > "$HOME/httpd.conf.bkp"
-        sudo mv "$HOME/httpd.conf.bkp" /etc/apache2/httpd.conf
-        sudo apachectl restart
+        if [[ $? -eq 0 ]]; then
+            local full_version=$(php --version | head -1 | awk '{print $2}')
+            local major_version=$(echo ${full_version%.*} | sed -e 's,\.,,g')
+            local php_module="$(brew --prefix)/Cellar/php${major_version}/${full_version}/libexec/apache2/libphp5.so"
+            sed -Ee "s,^#?(LoadModule php5_module).*,\1 ${php_module}," /etc/apache2/httpd.conf > "$HOME/httpd.conf.bkp"
+            sudo mv "$HOME/httpd.conf.bkp" /etc/apache2/httpd.conf
+            sudo apachectl restart
+        fi
     else
         echo "Error: requires php-version to be installed."
         echo "Head to https://github.com/wilmoore/php-version for details."
