@@ -12,10 +12,13 @@ run_cask() {
             e_header "Installing Homebrew Cask..."
             brew tap phinze/homebrew-cask
             brew install brew-cask
-
-            # this will give us access to beta versions, like Sublime Text 3
-            brew tap caskroom/versions
         fi
+
+        # this will give us access to beta versions, like Sublime Text 3
+        e_header "Tapping any new repos..."
+        while read p; do
+            brew tap "$p" 2> /dev/null
+        done < taps.txt
 
         # check desired cask applications & install missing
         e_header "Reading desired packages from ${PWD##*/}/requirements.txt..."
