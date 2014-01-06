@@ -415,3 +415,5 @@ Inspiration and code was taken from many sources, including:
   [https://github.com/alrra/dotfiles](https://github.com/alrra/dotfiles)
 * [@holman](https://github.com/holman) (Zach Holman)
   [https://github.com/holman/dotfiles](https://github.com/holman/dotfiles)
+* [@sindresorhus](https://github.com/sindresorhus) (Sindre Sorhus)
+  [https://github.com/sindresorhus/quick-look-plugins](https://github.com/sindresorhus/quick-look-plugins)
