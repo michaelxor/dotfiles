@@ -33,7 +33,7 @@ run_python() {
         fi
 
         # make sure we're not in a virtualenv already
-        if [[ "$VIRTUAL_ENV" != "" ]]; then
+        if [[ ! -z "$VIRTUAL_ENV" ]]; then
             deactivate
         fi
 
