@@ -40,7 +40,7 @@ load_dotfiles() {
         $HOME/.dotfiles/shell/bash_options # Options
         $HOME/.dotfiles/shell/bash_exports # Exports
         $HOME/.dotfiles/shell/bash_aliases # Aliases
-        $HOME/.dotfiles/shell/functions/* # Functions
+        $HOME/.dotfiles/*/functions/* # Functions
         $HOME/.dotfiles/shell/bash_prompt # Custom bash prompt
         $HOME/.dotfiles/shell/bash_paths # Path modifications
         $(brew --prefix)/etc/bash_completion # Bash completion (installed via Homebrew)

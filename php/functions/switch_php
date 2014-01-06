@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# this assumes you're using apache
+# this assumes you're using apache & php-version
 # $1 major version (i.e. 5.4)
 switch_php() {
     php_version_exists=$(type "php-version" | head -1 | grep "function")
