@@ -195,13 +195,21 @@ to the default rvm environment.
 
 ### PHP
 
-The latest PHP 5.4.x and 5.5.x branches are installed. As well as a tool
-that makes it easier to switch between versions.
+The latest PHP 5.3.x, 5.4.x, 5.5.x branches are installed.  php-versions
+is included to make switching between multiple versions of PHP easier.
 
 * [php55](http://php.net/)
 * php54
+* php53
 * [php-version](https://github.com/wilmoore/php-version#simple-php-version-switching)
 * [phpunit](http://phpunit.de/manual/current/en/)
+
+*Functions*
+```bash
+$ switch_php <version>
+```
+Updates the command line PHP and PEAR commands as well as the currently
+loaded apache php module.
 
 ## Other Features
 
