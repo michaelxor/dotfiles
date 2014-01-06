@@ -25,7 +25,7 @@ load_dotfiles() {
         if [[ -r "$file" ]]; then
             config_files=("${config_files[@]}" "$file")
         fi
-    done < <(find "$HOME/.dotfiles" -iname "*.bash" -print0)
+    done < <(find "$HOME/.dotfiles" -d 2 -iname "*.bash" -print0)
 
     # source per-componenet path updates first
     for file in "${config_files[@]}"
