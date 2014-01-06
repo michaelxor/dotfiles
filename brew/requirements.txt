@@ -13,3 +13,6 @@ phantomjs
 tree
 wget
 grc
+rsync
+grep
+screen

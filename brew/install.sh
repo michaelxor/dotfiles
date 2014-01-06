@@ -18,6 +18,12 @@ run_brew() {
         brew upgrade
         [[ $? ]] && e_success "Done"
 
+        # this will give us access to newer versions of rsync, grep, etc
+        e_header "Tapping any new repos..."
+        while read p; do
+            brew tap "$p" 2> /dev/null
+        done < taps.txt
+
         # Check desired homebrew formulae & install missing
         e_header "Reading desired packages from ${PWD##*/}/requirements.txt..."
         local -a missing_formulae
@@ -35,13 +41,6 @@ run_brew() {
             e_header "Installing missing Homebrew formulae..."
             brew install $list_formulae
             [[ $? ]] && e_success "Done"
-        fi
-
-        # use latest rsync rather than out-dated OS X rsync
-        # install separately from the main formulae list to fix
-        # https://github.com/necolas/dotfiles/issues/19
-        if ! formula_exists 'rsync'; then
-            brew install https://raw.github.com/Homebrew/homebrew-dupes/master/rsync.rb
         fi
 
         brew cleanup
