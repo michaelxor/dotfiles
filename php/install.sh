@@ -31,6 +31,11 @@ run_php() {
             brew install $list_formulae
             [[ $? ]] && e_success "Done"
         fi
+    else
+        printf "\n"
+        e_error "Error: Homebrew not found."
+        printf "Aborting...\n"
+        exit
     fi
 }
 
