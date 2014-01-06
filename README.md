@@ -69,6 +69,10 @@ Options:
         <td><code>--no-ruby</code></td>
         <td>Suppress RVM/Ruby install &amp; gem updates</td>
     </tr>
+    <tr>
+        <td><code>--no-php</code></td>
+        <td>Suppress PHP install</td>
+    </tr>
 </table>
 
 
@@ -189,6 +193,15 @@ to the default rvm environment.
 
 * [sass](http://sass-lang.com/)
 
+### PHP
+
+The latest PHP 5.4.x and 5.5.x branches are installed. As well as a tool
+that makes it easier to switch between versions.
+
+* [php55](http://php.net/)
+* php54
+* [php-version](https://github.com/wilmoore/php-version#simple-php-version-switching)
+* [phpunit](http://phpunit.de/manual/current/en/)
 
 ## Other Features
 

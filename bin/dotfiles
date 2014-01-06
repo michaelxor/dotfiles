@@ -48,6 +48,7 @@ do
         --no-node) no_node=true ;;
         --no-py) no_py=true ;;
         --no-ruby) no_ruby=true ;;
+        --no-php) no_php=true ;;
         -*|--*) e_warning "Warning: invalid option $opt" ;;
     esac
 done
@@ -153,6 +154,18 @@ else
     if [[ -r "ruby/install.sh" ]]; then
         printf "Updating ruby packages...\n"
         cd ruby
+        source install.sh
+        cd "${DOTFILES_DIRECTORY}"
+    fi
+fi
+
+# php
+if [[ $no_php ]]; then
+    printf "Skipped php installation and updates.\n"
+else
+    if [[ -r "php/install.sh" ]]; then
+        printf "Updating php packages...\n"
+        cd php
         source install.sh
         cd "${DOTFILES_DIRECTORY}"
     fi
