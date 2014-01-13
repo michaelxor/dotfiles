@@ -172,18 +172,40 @@ plan on using from the command line.
 ### Python
 
 The latest Python 2.x and 3.x branches are installed via Homebrew, and
-they are bundled with pip.  <code>virtualenv</code> and
-<code>virtualenvwrapper</code> are installed globally via pip.  The
-contents of <code>requirements.txt</code> are then installed via pip to
-a new clean virtualenv.
+they are bundled with pip. <code>virtualenv</code>,
+<code>virtualenv-clone</code>, and <code>pew</code> are installed
+globally via pip.  The contents of <code>requirements.txt</code> are
+then installed via pip to a new clean virtualenv.
 
-Pip and virtualenvwrapper are both configured to use ~/.virtualenvs as
-the default for new virtual environments, and there are a few useful hooks
-for virtualenvwrapper to make working with projects a little easier.
+For those unfamiliar with pew, it is an alternative to
+virtualenvwrapper for managing multiple virtualenvs.  It also
+provides an [alternative method](https://gist.github.com/datagrok/2199506) to activate virtual environments
+instead of the traditional activate/deactivate.
+
+pip and pew are both configured to use ~/.virtualenvs as
+the default for new virtual environments.
 
 * [virtualenv](http://www.virtualenv.org/en/latest/)
-* [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/)
+* [virtualenv-clone](https://github.com/edwardgeorge/virtualenv-clone)
+* [pew](https://github.com/michaelxor/invewrapper)
+
+These are installed into your default virtualenv:
+
 * [django](https://www.djangoproject.com/)
+* [ipython](http://ipython.org/)
+
+*Functions*
+```bash
+$ check_virtualenv
+```
+Checks the current directory for existence of a .venv file. If
+it exists and its contents name an exsiting virtualenv, that
+virtualenv will be activated
+
+```bash
+$ venv_cd <path>
+```
+Performs a cd and then calls check_virtualenv
 
 ### Ruby
 

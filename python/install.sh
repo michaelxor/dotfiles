@@ -3,13 +3,13 @@
 # Python
 #
 # This will install the latest python 2.x branch via
-# Homebrew, install virtualenv and virtualenvwrapper packages
+# Homebrew, install virtualenv and pew packages
 # globally via pip, then create a base virtual environment under
 # the branch and install the packages in requirements.txt
 #
 # todo: get pip / requirements working with the python 3.x
 #
-# alternate version that does not depend on virtualenvwrapper is
+# alternate version that does not depend on pew is
 # available here:
 # https://gist.github.com/michaelxor/8136225
 
@@ -34,19 +34,18 @@ run_python() {
 
         # make sure we're not in a virtualenv already
         if [[ ! -z "$VIRTUAL_ENV" ]]; then
-            deactivate
+            e_error "Error: Cannot continue inside of a virtual environment.  Please deactivate your virtualenv before and try agian."
+            return
         fi
 
-        # next, we'll install virtualenv and virtualenvwrapper,
-        # and create a couple base virtual environments
-        if ! pypackage_exists "virtualenv"; then
-            e_header "Installing virtualenv..."
-            pip install virtualenv
-        fi
-
-        if ! pypackage_exists "virtualenvwrapper"; then
-            e_header "Installing virtualenvwrapper..."
-            pip install virtualenvwrapper
+        # next, we'll install pew and create a couple base virtual environments
+        if ! pypackage_exists "pew"; then
+            e_header "Installing pew..."
+            # using my version which has a few more shell-friendly commands
+            # will move back to the default version if my pull requests are
+            # ever merged in
+            # pip install pew
+            pip install git+ssh://git@github.com/michaelxor/invewrapper.git
         fi
 
         # new envs
@@ -57,38 +56,29 @@ run_python() {
         # included bash startup file
         source config.bash
 
-        # copy some default virtualenvwrapper hooks into the global hook dir
-        seek_confirmation "Warning: This step may overwrite your virtualenvwrapper hooks."
-        if is_confirmed; then
-            ln -fs ${HOME}/.dotfiles/python/virtualenvwrapper/* "${WORKON_HOME}/"
-        fi
-
         # create the 2.x virtualenv
-        if [[ ! $(workon | grep -e "^${INITIAL_ENV}$") ]]; then
+        if [[ ! $(pew workon | tr ' ' '\n' | grep -e "^${INITIAL_ENV}$") ]]; then
             e_header "Creating new virtualenv ${INITIAL_ENV}..."
-            mkvirtualenv ${INITIAL_ENV}
+            pew new ${INITIAL_ENV} -d
         fi
 
         # create the 3.x virtualenv
-        if [[ ! $(workon | grep -e "^${INITIAL_ENV_3}$") ]]; then
+        if [[ ! $(pew workon | tr ' ' '\n' | grep -e "^${INITIAL_ENV_3}$") ]]; then
             e_header "Creating new virtualenv ${INITIAL_ENV_3}..."
-            mkvirtualenv --python=python3 ${INITIAL_ENV_3}
+            pew new --python=python3 ${INITIAL_ENV_3} -d
         fi
 
         e_header "Updating pip for all virtual environments..."
-        allvirtualenv pip install -U pip
+        pew inall pip install -U pip
 
         e_header "Updating packages for ${INITIAL_ENV}..."
-        workon ${INITIAL_ENV}
-        pip install -r requirements.txt
+        pew in ${INITIAL_ENV} pip install -r requirements.txt
 
         # i'm not especially clear on how pip works with python3.x...
         # not seeing any packages come through with pip freeze
         # e_header "Updating packages for ${INITIAL_ENV_3}..."
-        # workon ${INITIAL_ENV_3}
-        # pip install -r requirements.txt
+        # pew in ${INITIAL_ENV_3} pip install -r requirements.txt
 
-        deactivate
         [[ $? ]] && e_success "Done"
     else
         printf "\n"

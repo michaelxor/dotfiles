@@ -27,7 +27,21 @@ load_dotfiles() {
         fi
     done < <(find "$HOME/.dotfiles" -d 2 -iname "*.bash" -print0)
 
-    # source per-componenet path updates first
+    # load up any functions
+    declare -a functions=(
+        $HOME/.dotfiles/*/functions/*
+    )
+    for index in ${!functions[*]}
+    do
+        source ${functions[$index]}
+    done
+
+    # Path modifications - do these first
+    if [[ -r "$HOME/.dotfiles/shell/bash_paths" ]]; then
+        source "$HOME/.dotfiles/shell/bash_paths"
+    fi
+
+    # source per-componenet path updates next
     for file in "${config_files[@]}"
     do
         if [[ "${file##*/}" =~ "path.bash" && -r "${file}" ]]; then
@@ -40,9 +54,7 @@ load_dotfiles() {
         $HOME/.dotfiles/shell/bash_options # Options
         $HOME/.dotfiles/shell/bash_exports # Exports
         $HOME/.dotfiles/shell/bash_aliases # Aliases
-        $HOME/.dotfiles/*/functions/* # Functions
         $HOME/.dotfiles/shell/bash_prompt # Custom bash prompt
-        $HOME/.dotfiles/shell/bash_paths # Path modifications
         $(brew --prefix)/etc/bash_completion # Bash completion (installed via Homebrew)
         $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
     )

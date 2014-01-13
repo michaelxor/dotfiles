@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# do a cd + check to see if we should launch a virtualenv
+venv_cd () {
+    builtin cd "$@" && check_virtualenv
+}
