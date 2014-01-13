@@ -1,6 +1,7 @@
 bower
 gify
 grunt-cli
+grunt-init
 jshint
 karma
 yo
