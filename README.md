@@ -165,6 +165,7 @@ plan on using from the command line.
 * [bower](http://bower.io/)
 * [gify](https://github.com/visionmedia/node-gify)
 * [grunt-cli](http://gruntjs.com/)
+* [grunt-init](https://github.com/gruntjs/grunt-init)
 * [jshint](http://www.jshint.com/)
 * [karma](http://karma-runner.github.io/)
 * [yo](http://yeoman.io/)
