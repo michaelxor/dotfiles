@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# add directory to the front of your PATH
+path_prepend () {
+    path_remove $1;
+    export PATH="$1:$PATH";
+}

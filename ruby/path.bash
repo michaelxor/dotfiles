@@ -2,5 +2,5 @@
 
 # paths for rvm
 if [[ -d "$HOME/.rvm/bin" ]]; then
-    PATH="$PATH:$HOME/.rvm/bin"
+    path_append "$HOME/.rvm/bin"
 fi

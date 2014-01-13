@@ -20,7 +20,7 @@ for index in ${!dirs_to_prepend[*]}
 do
     if [ -d ${dirs_to_prepend[$index]} ]; then
         # If these directories exist, then prepend them to existing PATH
-        PATH="${dirs_to_prepend[$index]}:$PATH"
+        path_prepend "${dirs_to_prepend[$index]}"
     fi
 done
 
@@ -29,7 +29,7 @@ for index in ${!dirs_to_append[*]}
 do
     if [ -d ${dirs_to_append[$index]} ]; then
         # If these bins exist, then append them to existing PATH
-        PATH="$PATH:${dirs_to_append[$index]}"
+        path_append "${dirs_to_append[$index]}"
     fi
 done
 

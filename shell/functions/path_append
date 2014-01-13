@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# add directory to the end of your PATH
+path_append ()  {
+    path_remove $1;
+    export PATH="$PATH:$1";
+}
