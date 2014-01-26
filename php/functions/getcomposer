@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# install composer locally, or at the destination specified
+getcomposer() {
+    local install_dir="."
+    if [[ $# != 0 ]]; then
+        install_dir="$1"
+    fi
+
+    curl -sS https://getcomposer.org/installer | php -- --install-dir="${install_dir}"
+}

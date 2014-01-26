@@ -231,8 +231,12 @@ is included to make switching between multiple versions of PHP easier.
 ```bash
 $ switch_php <version>
 ```
-Updates the command line PHP and PEAR commands as well as the currently
-loaded apache php module.
+Updates the command line PHP and PEAR commands as well as the currently loaded apache php module.
+```bash
+$ getcomposer [<dir>]
+```
+Installs composer to the current working directory, or to the
+directory specified if it exists.
 
 ## Other Features
 
