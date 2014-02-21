@@ -165,7 +165,6 @@ plan on using from the command line.
 * [bower](http://bower.io/)
 * [gify](https://github.com/visionmedia/node-gify)
 * [grunt-cli](http://gruntjs.com/)
-* [grunt-init](https://github.com/gruntjs/grunt-init)
 * [jshint](http://www.jshint.com/)
 * [karma](http://karma-runner.github.io/)
 * [yo](http://yeoman.io/)
@@ -188,7 +187,7 @@ the default for new virtual environments.
 
 * [virtualenv](http://www.virtualenv.org/en/latest/)
 * [virtualenv-clone](https://github.com/edwardgeorge/virtualenv-clone)
-* [pew](https://github.com/michaelxor/invewrapper)
+* [pew](https://github.com/berdario/invewrapper)
 
 These are installed into your default virtualenv:
 
@@ -221,9 +220,12 @@ to the default rvm environment.
 The latest PHP 5.3.x, 5.4.x, 5.5.x branches are installed.  php-versions
 is included to make switching between multiple versions of PHP easier.
 
-* [php55](http://php.net/)
+* [php56](http://php.net/)
+* [php56-xdebug](http://xdebug.org/)
+* php55
+* php55-xdebug
 * php54
-* php53
+* php54-xdebug
 * [php-version](https://github.com/wilmoore/php-version#simple-php-version-switching)
 * [phpunit](http://phpunit.de/manual/current/en/)
 

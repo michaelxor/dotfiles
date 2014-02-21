@@ -15,4 +15,3 @@ wget
 grc
 rsync
 grep
-screen
