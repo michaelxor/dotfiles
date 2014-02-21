@@ -1,5 +1,8 @@
 php-version
+php56
+php56-xdebug
 php55
+php55-xdebug
 php54
-php53
+php54-xdebug
 phpunit

@@ -23,13 +23,12 @@ run_php() {
         done < requirements.txt
 
         if [[ "$missing_formulae" ]]; then
-            # Convert the array of missing formulae into a list of space-separate strings
-            local list_formulae=$( printf "%s " "${missing_formulae[@]}" )
-
-            # install the missinge formulae
             e_header "Installing missing Homebrew formulae..."
-            brew install $list_formulae
-            [[ $? ]] && e_success "Done"
+            for formula in ${missing_formulae[@]}; do
+                brew install $formula
+                [[ $? ]] && e_success "Done"
+                brew link --overwrite $formula
+            done
         fi
     else
         printf "\n"
