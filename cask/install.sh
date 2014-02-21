@@ -21,21 +21,17 @@ run_cask() {
         done < taps.txt
 
         # check desired cask applications & install missing
-        e_header "Reading desired packages from ${PWD##*/}/requirements.txt..."
-        local -a missing_apps
+        # e_header "Reading desired packages from ${PWD##*/}/requirements.txt..."
+        e_header "Installing or Updating Cask applications..."
+        local -a apps
         while read p; do
-            if ! app_exists "$p"; then
-                missing_apps=("${missing_apps[@]}" "$p")
-            fi
+            apps=("${apps[@]}" "$p")
+            brew cask install $p
         done < requirements.txt
 
-        if [[ "$missing_apps" ]]; then
+        if [[ "$apps" ]]; then
             # Convert the array of missing apps into a list of space-separate strings
-            local list_apps=$( printf "%s " "${missing_apps[@]}" )
-
-            # Install all missing apps
-            e_header "Installing missing Cask applications..."
-            brew cask install $list_apps
+            local list_apps=$( printf "%s " "${apps[@]}" )
 
             # dumb way to guess if quicklook restart is necessary
             if [[ $list_apps =~ "ql" || $list_apps =~ "quicklook" ]]; then
