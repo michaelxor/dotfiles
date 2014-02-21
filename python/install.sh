@@ -39,14 +39,8 @@ run_python() {
         fi
 
         # next, we'll install pew and create a couple base virtual environments
-        if ! pypackage_exists "pew"; then
-            e_header "Installing pew..."
-            # using my version which has a few more shell-friendly commands
-            # will move back to the default version if my pull requests are
-            # ever merged in
-            # pip install pew
-            pip install git+ssh://git@github.com/michaelxor/invewrapper.git
-        fi
+        e_header "Installing pew..."
+        pip install pew
 
         # new envs
         INITIAL_ENV="pymordial"
