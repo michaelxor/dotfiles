@@ -217,15 +217,17 @@ to the default rvm environment.
 
 ### PHP
 
-The latest PHP 5.3.x, 5.4.x, 5.5.x branches are installed.  php-versions
+The latest PHP 5.5.x and 5.6.x branches are installed.  php-versions
 is included to make switching between multiple versions of PHP easier.
 
 * [php56](http://php.net/)
 * [php56-xdebug](http://xdebug.org/)
+* [php56-mcrypt](http://php.net/manual/en/book.mcrypt.php)
+* [php56-memcached](http://pecl.php.net/package/memcached)
 * php55
 * php55-xdebug
-* php54
-* php54-xdebug
+* php55-mcrypt
+* php55-memcached
 * [php-version](https://github.com/wilmoore/php-version#simple-php-version-switching)
 * [phpunit](http://phpunit.de/manual/current/en/)
 

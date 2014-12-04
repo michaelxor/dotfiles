@@ -1,8 +1,11 @@
 php-version
-php56
+php56 --with-homebrew-ssl --without-snmp
 php56-xdebug
+php56-mcrypt
+php56-memcached
 php55
 php55-xdebug
-php54
-php54-xdebug
+php55-mcrypt
+php55-memcached
 phpunit
+composer

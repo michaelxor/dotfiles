@@ -3,7 +3,7 @@
 # PHP
 #
 # This will install php-version for simple php version switching. You'll
-# also get the latest PHP 5.4.x and PHP 5.5.x branches.
+# also get the packages listed in requirements.txt
 
 run_php() {
     # verify a valid brew install
