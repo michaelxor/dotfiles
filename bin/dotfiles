@@ -211,10 +211,22 @@ mirrorfiles() {
     link "bin/svn-diffwrap.sh" ".subversion/svn-diffwrap.sh"
 
     # load up any component-based config files
-    # thanks to Sorpigal & SO for this
-    # http://stackoverflow.com/a/7039579/901717
-    while IFS= read -d $'\0' -r file ; do
+    IFS=$'\n'
+    for file in $(find "$HOME/.dotfiles" \( -d 1 -iname "*.symlink" -or -d 2 -iname "*.symlink" \)); do
         if [[ -r "$file" ]]; then
+            if [[ $no_node && $file == *"node/"* ]]; then
+                continue
+            fi
+            if [[ $no_ruby && $file == *"ruby/"* ]]; then
+                continue
+            fi
+            if [[ $no_py && $file == *"python/"* ]]; then
+                continue
+            fi
+            if [[ $no_php && $file == *"php/"* ]]; then
+                continue
+            fi
+
             # get the relative path for this file
             rel_file="${file##$HOME/.dotfiles/}"
 
@@ -225,11 +237,10 @@ mirrorfiles() {
             # link!
             link "$rel_file" "$link_name"
         fi
-    done < <(find "$HOME/.dotfiles" \( -d 1 -iname "*.symlink" -or -d 2 -iname "*.symlink" \) -print0)
+    done
 
     e_success "Dotfiles update complete!"
 }
-
 
 # Ask before potentially overwriting files
 seek_confirmation "Warning: This step may overwrite your existing dotfiles."

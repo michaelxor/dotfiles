@@ -15,6 +15,8 @@ Options:
     --no-cask       Suppress Homebrew Cask install
     --no-node       Suppress Node.js install
     --no-py         Suppress python install
+    --no-ruby       Suppress ruby install
+    --no-php        Suppress PHP install
 
 Documentation can be found at https://github.com/michaelxor/dotfiles/
 

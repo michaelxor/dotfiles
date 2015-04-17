@@ -15,24 +15,26 @@ fi
 # are already added to the PATH.
 [ -r "$HOME/.dotfilesrc" ] && source "$HOME/.dotfilesrc";
 
-
 load_dotfiles() {
-    # load up any component-based bash config files
-    # thanks to Sorpigal & SO for this
-    # http://stackoverflow.com/a/7039579/901717
-    config_files=()
-    while IFS= read -d $'\0' -r file ; do
-        if [[ -r "$file" ]]; then
-            config_files=("${config_files[@]}" "$file")
-        fi
-    done < <(find "$HOME/.dotfiles" -d 2 -iname "*.bash" -print0)
-
     # load up any functions
     declare -a functions=(
         $HOME/.dotfiles/*/functions/*
     )
     for index in ${!functions[*]}
     do
+        if [[ $no_node && ${functions[$index]} == *"node/"* ]]; then
+            continue
+        fi
+        if [[ $no_ruby && ${functions[$index]} == *"ruby/"* ]]; then
+            continue
+        fi
+        if [[ $no_py && ${functions[$index]} == *"python/"* ]]; then
+            continue
+        fi
+        if [[ $no_php && ${functions[$index]} == *"php/"* ]]; then
+            continue
+        fi
+
         source ${functions[$index]}
     done
 
@@ -41,10 +43,35 @@ load_dotfiles() {
         source "$HOME/.dotfiles/shell/bash_paths"
     fi
 
+    # load up any component-based bash config files
+    # thanks to Sorpigal & SO for this
+    # http://stackoverflow.com/a/7039579/901717
+    config_files=()
+
+    IFS=$'\n'
+    for file in $(find "$HOME/.dotfiles" -d 2 -iname "*.bash") ; do
+        if [[ -r "$file" ]]; then
+            if [[ $no_node && $file == *"node/"* ]]; then
+                continue
+            fi
+            if [[ $no_ruby && $file == *"ruby/"* ]]; then
+                continue
+            fi
+            if [[ $no_py && $file == *"python/"* ]]; then
+                continue
+            fi
+            if [[ $no_php && $file == *"php/"* ]]; then
+                continue
+            fi
+
+            config_files=("${config_files[@]}" "$file")
+        fi
+    done
+
     # source per-componenet path updates next
     for file in "${config_files[@]}"
     do
-        if [[ "${file##*/}" =~ "path.bash" && -r "${file}" ]]; then
+        if [[ "${file##*/}" =~ "path.bash" ]]; then
             source "${file}"
         fi
     done
@@ -68,7 +95,7 @@ load_dotfiles() {
     # source any other per-comonenet bash config next, except path & completions
     for file in "${config_files[@]}"
     do
-        if [[ ! "${file##*/}" =~ "path.bash" && ! "${file##*/}" =~ "completion.bash" && -r "$file" ]]; then
+        if [[ ! "${file##*/}" =~ "path.bash" && ! "${file##*/}" =~ "completion.bash" ]]; then
             source "${file}"
         fi
     done
@@ -76,7 +103,7 @@ load_dotfiles() {
     # load completions last
     for file in "${config_files[@]}"
     do
-        if [[ "${file##*/}" =~ "completion.bash" && -r "$file" ]]; then
+        if [[ "${file##*/}" =~ "completion.bash" ]]; then
             source "${file}"
         fi
     done

@@ -46,6 +46,15 @@ run_python() {
         INITIAL_ENV="pymordial"
         INITIAL_ENV_3="pymordial3"
 
+        # load up any functions
+        declare -a functions=(
+            $HOME/.dotfiles/python/functions/*
+        )
+        for index in ${!functions[*]}
+        do
+            source ${functions[$index]}
+        done
+
         # the first time we run this we'll need to source the
         # included bash startup file
         source config.bash
