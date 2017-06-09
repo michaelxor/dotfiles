@@ -1,6 +1,12 @@
 [alias]
     # https://git.wiki.kernel.org/articles/a/l/i/Aliases.html
 
+    ds = diff --staged
+    aa = add --all
+    co = checkout
+    ci = commit
+    oneline = log --oneline --pretty=format:'%h %ad%x09%an%x09%s' --date=short
+
     # `git remote prune origin`: remove remote-tracking branches that were deleted from the remote repo
     # `git gc`: cleanup unnecessary files and optimize the local repository
     # `git clean -df`: remove untracked files and directories from the working tree
@@ -67,4 +73,4 @@
     nice = "%C(yellow)%h%C(reset) %C(white)%s%C(cyan)%d%C(reset) -- %an; %ar"
 
 [push]
-    default = simple
+    default = current

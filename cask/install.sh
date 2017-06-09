@@ -7,13 +7,6 @@
 run_cask() {
     # verify a valid brew install
     if type_exists 'brew'; then
-        # install homebrew cask if necessary
-        if ! noout formula_exists "brew-cask"; then
-            e_header "Installing Homebrew Cask..."
-            brew tap phinze/homebrew-cask
-            brew install brew-cask
-        fi
-
         # this will give us access to beta versions, like Sublime Text 3
         e_header "Tapping any new repos..."
         while read p; do
