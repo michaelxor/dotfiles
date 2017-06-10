@@ -1,10 +1,21 @@
-# virtualenvwarpper exports
+# pew exports
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Code
 
-# make sure pip uses the same base dir as virtualenvwrapper
+# make sure pip uses the same base dir as pew
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
+
+# let's not use the virtualenv prompt, ours is better
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+prompt_venv() {
+    if [[ ! -z $VIRTUAL_ENV ]]; then
+        printf "\n(${VIRTUAL_ENV##*/})"
+    fi
+
+    return
+}
 
 # pew doesn't prepend virtualenv to prompt by default
 prepend_prompt() {
@@ -55,11 +66,8 @@ prepend_prompt() {
         yellow="\e[1;33m"
     fi
 
-    if [[ ! -z $VIRTUAL_ENV ]]; then
-        PS1="\[$reset$white\]$PS1"
-        PS1="\[$blue\](\${VIRTUAL_ENV##*/})$PS1"
-        PS1="\n$PS1"
-    fi
+    PS1="\[$reset$white\]$PS1"
+    PS1="\[$blue\]\$(prompt_venv)$PS1"
 
     export PS1
 }
