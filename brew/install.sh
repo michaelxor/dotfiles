@@ -43,6 +43,24 @@ run_brew() {
             [[ $? ]] && e_success "Done"
         fi
 
+        if formula_exists 'bash'; then
+            local brew_bash_path="$(brew --prefix)/bin/bash"
+            if [[ "$SHELL" != "$brew_bash_path" ]]; then
+                seek_confirmation "Your current shell is not Homebrew installed bash, would you like to update your default shell?"
+
+                if is_confirmed; then
+                    local brew_bash=$(cat /etc/shells | grep "$brew_bash_path")
+                    if ! [[ $brew_bash ]]; then
+                        e_header "Did not find Homebrew bash in allowable shells, adding..."
+                        sudo bash -c "echo '$brew_bash_path' >> /etc/shells"
+                    fi
+
+                    e_header "Updating default shell to Homebrew bash, this will only take effect for new shells"
+                    chsh -s $brew_bash_path
+                fi
+            fi
+        fi
+
         brew cleanup
     else
         printf "\n"
