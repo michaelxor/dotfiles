@@ -263,6 +263,9 @@ directory specified if it exists.
 Custom OS X settings can be applied during the `dotfiles` process. They can
 also be applied independently by running the following command:
 
+If an environment variable called `$MACHINE_NAME` is present, your machine
+will be renamed to the value stored in this variable.
+
 ```bash
 $ osxdefaults
 ```
