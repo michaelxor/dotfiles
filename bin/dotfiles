@@ -49,6 +49,7 @@ do
         --no-py) no_py=true ;;
         --no-ruby) no_ruby=true ;;
         --no-php) no_php=true ;;
+        --no-tmux) no_tmux=true ;;
         -*|--*) e_warning "Warning: invalid option $opt" ;;
     esac
 done
@@ -99,7 +100,6 @@ else
     git submodule update --recursive --init --quiet
 fi
 
-# brew
 if [[ $no_packages ]]; then
     printf "Skipped brew package installations and updates.\n"
 else
@@ -111,7 +111,6 @@ else
     fi
 fi
 
-# cask
 if [[ $no_cask ]]; then
     printf "Skipped app installations.\n"
 else
@@ -123,7 +122,6 @@ else
     fi
 fi
 
-# node
 if [[ $no_node ]]; then
     printf "Skipped node installations and updates.\n"
 else
@@ -135,7 +133,6 @@ else
     fi
 fi
 
-# python
 if [[ $no_py ]]; then
     printf "Skipped python installation and updates.\n"
 else
@@ -147,7 +144,6 @@ else
     fi
 fi
 
-# ruby
 if [[ $no_ruby ]]; then
     printf "Skipped ruby installation and updates.\n"
 else
@@ -159,7 +155,6 @@ else
     fi
 fi
 
-# php
 if [[ $no_php ]]; then
     printf "Skipped php installation and updates.\n"
 else
@@ -171,6 +166,16 @@ else
     fi
 fi
 
+if [[ $no_tmux ]]; then
+    printf "Skipped tmux installation and updates.\n"
+else
+    if [[ -r "tmux/install.sh" ]]; then
+        printf "Updating tmux packages...\n"
+        cd tmux
+        source install.sh
+        cd "${DOTFILES_DIRECTORY}"
+    fi
+fi
 
 link() {
     # Force create/replace the symlink.
@@ -224,6 +229,9 @@ mirrorfiles() {
                 continue
             fi
             if [[ $no_php && $file == *"php/"* ]]; then
+                continue
+            fi
+            if [[ $no_tmux && $file == *"tmux/"* ]]; then
                 continue
             fi
 

@@ -89,6 +89,17 @@ pypackage_exists() {
     return 1
 }
 
+gem_exists() {
+    success=$(gem list --local | grep -e "^$1")
+    if [[ $success ]]; then
+        printf "%s already installed.\n" "$1"
+        return 0
+    fi
+
+    e_warning "Missing gem: $1"
+    return 1
+}
+
 noout() {
     "$@" >/dev/null 2>&1
 }

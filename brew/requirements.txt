@@ -9,5 +9,4 @@ wget
 grc
 rsync
 grep
-tmux
 sudolikeaboss
