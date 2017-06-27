@@ -2,7 +2,7 @@
 #
 # Tmux
 #
-# This will install some basic tmuxinator
+# This will install some basic tmux plugins along with tmuxinator
 
 run_tmux() {
     # verify a valid brew install

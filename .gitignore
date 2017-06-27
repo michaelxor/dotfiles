@@ -1,4 +1,4 @@
 vim/.netrwhist
 vim/.viminfo
-tmux/.tmux.symlink/plugins/*
+tmux/.tmux.symlink/*
 tmux/.tmuxinator.symlink/*

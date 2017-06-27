@@ -6,7 +6,6 @@ bind C-a send-prefix
 # truecolor support (this works with iTerm 3+)
 set -ga terminal-overrides ",xterm-256color:Tc"
 
-setw -g other-pane-width 90
 
 # some custom keybindings
 bind-key C-a last-window
@@ -14,6 +13,11 @@ bind-key N new-window -c "#{pane_current_path}"
 bind-key K confirm-before -p "kill-server #W? (y/n)" kill-server
 bind-key -r < resize-pane -L 5
 bind-key -r > resize-pane -R 5
+
+set -g renumber-windows on
+set -g base-index 1
+setw -g pane-base-index 1
+setw -g other-pane-width 90
 
 # styling
 
