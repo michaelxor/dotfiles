@@ -21,6 +21,8 @@ if has("autocmd")
     autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
     " Automatically strip trailing whitespace on file save
     autocmd BufWritePre *.css,*.html,*.js,*.json,*.md,*.php,*.py,*.rb,*.scss,*.sh,*.txt :call StripTrailingWhitespace()
+    " Automatically run prettier to format javascript files on save
+    autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 endif
 
 if has("syntax")
@@ -81,11 +83,44 @@ if has("extra_search")
     set smartcase
 endif
 
-" Show hidden files when using ctrlp
-let g:ctrlp_show_hidden = 1
+" Prettier
+let g:prettier#exec_cmd_async = 1
+let g:prettier#autoformat = 0
+let g:prettier#config#semi = 'false'
 
-" Change mapleader
-let mapleader=","
+" vim-test
+let test#strategy = 'vimux'
+let test#python#runner = 'pytest'
+let test#javascript#executable = 'yarn run test'
+
+" CtrlP
+map <silent> <leader>ff :CtrlP<CR>
+map <silent> <leader>fr :CtrlPClearCache<CR>
+map <silent> <leader>fb :CtrlPBuffer<CR>
+
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+  \ 'PrtSelectMove("k")':   ['<c-p>','<c-k>', '<up>'],
+  \ 'PrtHistory(-1)':       ['<c-j>'],
+  \ 'PrtHistory(1)':        ['<c-k>'],
+  \ }
+
+" NerdTree
+map <silent> <LocalLeader>nt :NERDTreeToggle<CR>
+map <silent> <LocalLeader>nr :NERDTree<CR>
+map <silent> <LocalLeader>nf :NERDTreeFind<CR>
+
+" Vimux
+map <silent> <LocalLeader>rl :wa<CR> :VimuxRunLastCommand<CR>
+map <silent> <LocalLeader>vi :wa<CR> :VimuxInspectRunner<CR>
+map <silent> <LocalLeader>vk :wa<CR> :VimuxInterruptRunner<CR>
+map <silent> <LocalLeader>vx :wa<CR> :VimuxClosePanes<CR>
+map <silent> <LocalLeader>vp :VimuxPromptCommand<CR>
+vmap <silent> <LocalLeader>vs "vy :call VimuxRunCommand(@v)<CR>
+nmap <silent> <LocalLeader>vs vip<LocalLeader>vs<CR>
+map <silent> <LocalLeader>ds :call VimuxRunCommand('clear; grep -E "^ *describe[ \(]\|^ *context[ \(]\|^ *it[ \(]" ' . bufname("%"))<CR>
 
 " Backspace through everything in INSERT mode
 set backspace=indent,eol,start
@@ -131,6 +166,7 @@ set viminfo+=n$HOME/.vim/.viminfo
 
 " Strip trailing whitespace (,$)
 noremap <leader>$ :call StripTrailingWhitespace()<CR>
+
 
 " Faster viewport scrolling (3 lines at a time)
 nnoremap <C-e> 3<C-e>
