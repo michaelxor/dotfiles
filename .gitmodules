@@ -32,3 +32,6 @@
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule "vim/bundle/vim-prettier"]
+	path = vim/bundle/vim-prettier
+	url = https://github.com/prettier/vim-prettier
