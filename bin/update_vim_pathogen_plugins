@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# Update the vim pathogen plugins bundles with these dotfiles
+
+set -eo pipefail;
+
+echo "Updating vim pathogen plugins..."
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+pushd "${REPO_ROOT}/vim/bundle"
+
+for i in `ls`; do
+    pushd "$i"
+    echo "Updating $i..."
+    git checkout master
+    git pull origin master
+    echo "Done updating $i"
+    echo
+    popd
+done
+
+popd
+
+echo "Successfully updated vim pathogen plugins! Remember to add and commit the updates."

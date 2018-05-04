@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Script to add a vim pathogen plugin
+
+if [ "$#" -ne 1 ]; then
+    echo "You must pass the git URL of the plugin you wish to add."
+    echo "Usage: add_vim_pathogen_plugin <git_url>"
+    exit 1
+fi
+
+set -eo pipefail;
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+pushd "$REPO_ROOT/vim/bundle"
+git submodule add "$1"
+git submodule update --init
+popd
+
+echo "Successfully added $1. Remember to add and commit this change."
