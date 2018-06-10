@@ -19,12 +19,14 @@ if has("autocmd")
 
     " Languages with specific tabs/space requirements
     autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
-    autocmd FileType javascript JsPreTmpl html
     autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
     " Automatically strip trailing whitespace on file save
     autocmd BufWritePre *.css,*.html,*.js,*.json,*.md,*.php,*.py,*.rb,*.scss,*.sh,*.txt :call StripTrailingWhitespace()
     " Automatically run prettier to format javascript files on save
     autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+    " Syntax highlight for javascript template literals
+    autocmd FileType javascript JsPreTmpl html
+    autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx JsPreTmpl html
 endif
 
 if has("syntax")
@@ -85,10 +87,17 @@ if has("extra_search")
     set smartcase
 endif
 
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
 " Prettier
 let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat = 0
 let g:prettier#config#semi = 'false'
+
+" Fugitive + bitbucket support
+" let g:fugitive_bitbucket_domains =
 
 " vim-test
 let test#strategy = 'vimux'
@@ -113,6 +122,10 @@ let g:ctrlp_prompt_mappings = {
 map <silent> <LocalLeader>nt :NERDTreeToggle<CR>
 map <silent> <LocalLeader>nr :NERDTree<CR>
 map <silent> <LocalLeader>nf :NERDTreeFind<CR>
+
+" TComment
+map <silent> <LocalLeader>cc :TComment<CR>
+map <silent> <LocalLeader>uc :TComment<CR>
 
 " Vimux
 map <silent> <LocalLeader>rl :wa<CR> :VimuxRunLastCommand<CR>
@@ -178,6 +191,9 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 vnoremap <C-e> 3<C-e>
 vnoremap <C-y> 3<C-y>
+
+" SideSearch current word and return to original window
+nnoremap <Leader>ss :SideSearch <C-r><C-w><CR> | wincmd p
 
 " Make `Y` work from the cursor to the end of line (which is more logical)
 nnoremap Y y$

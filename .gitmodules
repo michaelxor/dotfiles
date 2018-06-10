@@ -73,3 +73,36 @@
 [submodule "vim/bundle/vim-js-pretty-template"]
 	path = vim/bundle/vim-js-pretty-template
 	url = https://github.com/Quramy/vim-js-pretty-template
+[submodule "vim/bundle/vim-side-search"]
+	path = vim/bundle/vim-side-search
+	url = https://github.com/ddrscott/vim-side-search
+[submodule "vim/bundle/ack.vim"]
+	path = vim/bundle/ack.vim
+	url = https://github.com/mileszs/ack.vim
+[submodule "vim/bundle/vim-indexed-search"]
+	path = vim/bundle/vim-indexed-search
+	url = https://github.com/henrik/vim-indexed-search
+[submodule "vim/bundle/vim-cool"]
+	path = vim/bundle/vim-cool
+	url = https://github.com/romainl/vim-cool
+[submodule "vim/bundle/rainbow_parentheses.vim"]
+	path = vim/bundle/rainbow_parentheses.vim
+	url = https://github.com/kien/rainbow_parentheses.vim
+[submodule "vim/bundle/vim-jsx"]
+	path = vim/bundle/vim-jsx
+	url = https://github.com/mxw/vim-jsx
+[submodule "vim/bundle/tcomment_vim"]
+	path = vim/bundle/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim
+[submodule "vim/bundle/vim-surround"]
+	path = vim/bundle/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "vim/bundle/vim-rhubarb"]
+	path = vim/bundle/vim-rhubarb
+	url = https://github.com/tpope/vim-rhubarb
+[submodule "vim/bundle/vim-fubitive"]
+	path = vim/bundle/vim-fubitive
+	url = https://github.com/tommcdo/vim-fubitive
+[submodule "vim/bundle/matchit.zip"]
+	path = vim/bundle/matchit.zip
+	url = https://github.com/vim-scripts/matchit.zip
