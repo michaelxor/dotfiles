@@ -19,6 +19,8 @@ if has("autocmd")
 
     " Languages with specific tabs/space requirements
     autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
+    autocmd FileType javascript JsPreTmpl html
+    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
     " Automatically strip trailing whitespace on file save
     autocmd BufWritePre *.css,*.html,*.js,*.json,*.md,*.php,*.py,*.rb,*.scss,*.sh,*.txt :call StripTrailingWhitespace()
     " Automatically run prettier to format javascript files on save
@@ -147,6 +149,9 @@ set cursorline
 set scrolloff=3
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
+"Increase memory for pattern matching
+set maxmempattern=8192
+
 
 " Show 'invisible' characters
 set list

@@ -47,3 +47,30 @@
 [submodule "vim/bundle/vim-obsession"]
 	path = vim/bundle/vim-obsession
 	url = git://github.com/tpope/vim-obsession.git
+[submodule "vim/bundle/bufexplorer"]
+	path = vim/bundle/bufexplorer
+	url = https://github.com/jlanzarotta/bufexplorer.git
+[submodule "vim/bundle/vim-fugitive"]
+	path = vim/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim/bundle/ansible-vim"]
+	path = vim/bundle/ansible-vim
+	url = https://github.com/pearofducks/ansible-vim
+[submodule "vim/bundle/Dockerfile.vim"]
+	path = vim/bundle/Dockerfile.vim
+	url = https://github.com/ekalinin/Dockerfile.vim
+[submodule "vim/bundle/vim-jasmine"]
+	path = vim/bundle/vim-jasmine
+	url = https://github.com/glanotte/vim-jasmine
+[submodule "vim/bundle/nginx.vim"]
+	path = vim/bundle/nginx.vim
+	url = https://github.com/chr4/nginx.vim
+[submodule "vim/bundle/python-syntax"]
+	path = vim/bundle/python-syntax
+	url = https://github.com/vim-python/python-syntax
+[submodule "vim/bundle/vim-yaml"]
+	path = vim/bundle/vim-yaml
+	url = https://github.com/stephpy/vim-yaml
+[submodule "vim/bundle/vim-js-pretty-template"]
+	path = vim/bundle/vim-js-pretty-template
+	url = https://github.com/Quramy/vim-js-pretty-template
