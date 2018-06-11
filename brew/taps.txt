@@ -1,3 +1,4 @@
 homebrew/dupes
 homebrew/versions
 ravenac95/sudolikeaboss
+universal-ctags/universal-ctags

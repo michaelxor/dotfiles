@@ -95,6 +95,9 @@ endif
 let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat = 0
 let g:prettier#config#semi = 'false'
+let g:prettier#config#tab_width = 4
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#arrow_parens = 'always'
 
 " Fugitive + bitbucket support
 " let g:fugitive_bitbucket_domains =
@@ -126,6 +129,9 @@ map <silent> <LocalLeader>nf :NERDTreeFind<CR>
 " TComment
 map <silent> <LocalLeader>cc :TComment<CR>
 map <silent> <LocalLeader>uc :TComment<CR>
+
+" TagBar
+map <silent> <LocalLeader>tb :TagbarToggle<CR>
 
 " Vimux
 map <silent> <LocalLeader>rl :wa<CR> :VimuxRunLastCommand<CR>

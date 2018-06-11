@@ -106,3 +106,12 @@
 [submodule "vim/bundle/matchit.zip"]
 	path = vim/bundle/matchit.zip
 	url = https://github.com/vim-scripts/matchit.zip
+[submodule "vim/bundle/fzf.vim"]
+	path = vim/bundle/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule "vim/bundle/fzf"]
+	path = vim/bundle/fzf
+	url = https://github.com/junegunn/fzf
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = https://github.com/majutsushi/tagbar
