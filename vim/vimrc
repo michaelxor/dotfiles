@@ -99,6 +99,15 @@ let g:prettier#config#tab_width = 4
 let g:prettier#config#bracket_spacing = 'true'
 let g:prettier#config#arrow_parens = 'always'
 
+" vim-devicons
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsOS = 'Darwin'
+
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('g:loaded_webdevicons')
+    call webdevicons#refresh()
+endif
+
 " Fugitive + bitbucket support
 " let g:fugitive_bitbucket_domains =
 
