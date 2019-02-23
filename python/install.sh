@@ -16,20 +16,20 @@
 run_python() {
     if type_exists "brew"; then
         # install latest python 2.x and 3.x branches, if necessary
-        if ! formula_exists "python"; then
+        if ! formula_exists "python@2"; then
             e_header "Installing Python 2.x..."
-            brew install python
+            brew install python@2
 
             # make sure we're using brew's python
-            brew link --overwrite python
+            brew link --overwrite python@2
         fi
 
-        if ! formula_exists "python3"; then
+        if ! formula_exists "python"; then
             e_header "Installing Python 3.x..."
-            brew install python3
+            brew install python
 
             # make sure we're using brew's python3
-            brew link --overwrite python3
+            brew link --overwrite python
         fi
 
         # make sure we're not in a virtualenv already

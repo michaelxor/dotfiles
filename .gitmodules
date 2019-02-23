@@ -118,3 +118,6 @@
 [submodule "vim/bundle/ctrlp.vim"]
 	path = vim/bundle/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim
+[submodule "vim/bundle/vim-autopep8"]
+	path = vim/bundle/vim-autopep8
+	url = https://github.com/tell-k/vim-autopep8
