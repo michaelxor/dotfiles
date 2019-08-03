@@ -1,6 +1,0 @@
-bower
-gify
-grunt-cli
-jshint
-karma
-yo

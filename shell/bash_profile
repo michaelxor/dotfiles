@@ -34,6 +34,9 @@ load_dotfiles() {
         if [[ $no_php && ${functions[$index]} == *"php/"* ]]; then
             continue
         fi
+        if [[ $no_tmux && ${functions[$index]} == *"node/"* ]]; then
+            continue
+        fi
 
         source ${functions[$index]}
     done
@@ -61,6 +64,9 @@ load_dotfiles() {
                 continue
             fi
             if [[ $no_php && $file == *"php/"* ]]; then
+                continue
+            fi
+            if [[ $no_tmux && $file == *"tmux/"* ]]; then
                 continue
             fi
 

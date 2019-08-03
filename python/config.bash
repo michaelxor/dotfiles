@@ -1,11 +1,3 @@
-# pew exports
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Code
-
-# make sure pip uses the same base dir as pew
-export PIP_VIRTUALENV_BASE=$WORKON_HOME
-export PIP_RESPECT_VIRTUALENV=true
-
 # let's not use the virtualenv prompt, ours is better
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
@@ -17,7 +9,7 @@ prompt_venv() {
     return
 }
 
-# pew doesn't prepend virtualenv to prompt by default
+# slightly nicer venv prompt
 prepend_prompt() {
     local black=""
     local blue=""
@@ -73,8 +65,3 @@ prepend_prompt() {
 }
 
 prepend_prompt
-
-# in case we launch a new terminal in a directory with a
-# .venv file, check immediately
-check_virtualenv
-

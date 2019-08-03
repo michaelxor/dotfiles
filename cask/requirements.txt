@@ -3,13 +3,11 @@ google-chrome
 alfred
 sizeup
 iterm2
-sublime-text
 pycharm
 dash
 dropbox
 docker
 caffeine
-flux
 qlcolorcode
 qlstephen
 qlmarkdown

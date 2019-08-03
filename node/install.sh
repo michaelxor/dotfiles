@@ -1,46 +1,25 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
-# Node.js
+# Node
 #
-# This installs Node.js via Homebrew and a list of common
-# dependencies using npm.
-#
-# Add packages to requirements.txt as necessary. This
-# installs packages globally, so this list should remain
-# small and include only packages you plan to run via the
-# command line
+# This installs nvm via git, grabs latest node and sets this as the
+# default for new bash sessions.
 
 run_node() {
-    # If npm is missing, try an install via brew
-    if ! type_exists 'npm'; then
-        if type_exists 'brew'; then
-            # install node (npm is packaged with node) if necessary
-            if ! noout formula_exists "node"; then
-                e_header "Installing Node.js..."
-                brew install node
-            fi
-        fi
+    e_header "Installing nvm via git..."
+    if [[ ! -d "$HOME/.nvm" ]]; then
+        git clone https://github.com/nvm-sh/nvm.git "$HOME/.nvm"
     fi
 
-    if type_exists 'npm'; then
-        # Check desired homebrew formulae & install missing
-        e_header "Reading desired packages from ${PWD##*/}/requirements.txt..."
-        local  packages
-        while read p; do
-            packages="$packages $p"
-        done < requirements.txt
+    pushd "$HOME/.nvm"
+    git checkout v0.34.0
+    source nvm.sh
+    popd
 
-        # Install packages globally and quietly
-        npm install $packages --global --quiet
-
-        [[ $? ]] && e_success "Done"
-    else
-        printf "\n"
-        e_error "Error: npm not found."
-        printf "Aborting...\n"
-        exit
-    fi
-
+    # install latest node
+    e_header "Installing latest node..."
+    nvm install v12.7.0
+    nvm alias default v12.7.0
 }
 
 run_node

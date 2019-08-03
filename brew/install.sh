@@ -18,12 +18,6 @@ run_brew() {
         brew upgrade
         [[ $? ]] && e_success "Done"
 
-        # this will give us access to newer versions of rsync, grep, etc
-        e_header "Tapping any new repos..."
-        while read p; do
-            brew tap "$p" 2> /dev/null
-        done < taps.txt
-
         # Check desired homebrew formulae & install missing
         e_header "Reading desired packages from ${PWD##*/}/requirements.txt..."
         local -a missing_formulae

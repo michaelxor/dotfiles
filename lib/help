@@ -17,6 +17,7 @@ Options:
     --no-py         Suppress python install
     --no-ruby       Suppress ruby install
     --no-php        Suppress PHP install
+    --no-tmux       Suppress tmux install
 
 Documentation can be found at https://github.com/michaelxor/dotfiles/
 
