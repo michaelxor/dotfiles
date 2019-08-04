@@ -230,11 +230,6 @@ nnoremap <Leader>ss :SideSearch <C-r><C-w><CR> | wincmd p
 " Make `Y` work from the cursor to the end of line (which is more logical)
 nnoremap Y y$
 
-" Enable powerline
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
-
 " Load local machine settings if they exist
 if filereadable(glob("$HOME/.vimrc.local"))
     source $HOME/.vimrc.local

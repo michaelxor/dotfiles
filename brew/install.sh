@@ -37,6 +37,18 @@ run_brew() {
             [[ $? ]] && e_success "Done"
         fi
 
+        # install these into the system python environment
+        # to avoid issues when switching between venvs
+        e_header "Installing powerline shell prompt..."
+        if [ -x "/usr/local/bin/pip" ]; then
+            /usr/local/bin/pip install -q powerline-shell
+        fi
+        if [ -x "/usr/local/bin/pip3" ]; then
+            /usr/local/bin/pip3 install -q powerline-shell
+        fi
+        mkdir -p "${HOME}/.config/powerline-shell"
+        ln -sf "${HOME}/.dotfiles/brew/.config/powerline-shell/config.json" "${HOME}/.config/powerline-shell/config.json"
+
         if formula_exists 'bash'; then
             local brew_bash_path="$(brew --prefix)/bin/bash"
             if [[ "$SHELL" != "$brew_bash_path" ]]; then

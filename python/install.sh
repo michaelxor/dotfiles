@@ -10,10 +10,14 @@
 run_python() {
     if type_exists "brew"; then
         e_header "Installing pyenv and recommended dependencies..."
-        brew install pyenv openssl readline sqlite3 xz zlib
-
-        e_header "Installing pyenv-virtualenv..."
-        brew install pyenv-virtualenv
+        brew install pyenv \
+            pyenv-virtualenv \
+            pyenv-which-ext \
+            openssl \
+            readline \
+            sqlite3 \
+            xz \
+            zlib
 
         e_header "Installing python 2.7-dev..."
         pyenv install -s 2.7-dev
