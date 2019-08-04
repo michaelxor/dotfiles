@@ -25,8 +25,8 @@ if has("autocmd")
     " Automatically run prettier to format javascript files on save
     autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
     " Syntax highlight for javascript template literals
-    autocmd FileType javascript JsPreTmpl html
-    autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx JsPreTmpl html
+    autocmd FileType javascript JsPreTmpl
+    autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx JsPreTmpl
     " map keys for python files to run autopep8
     autocmd FileType python noremap <Leader>ap :call Autopep8()<CR>
 endif
@@ -141,11 +141,16 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtHistory(-1)':       ['<c-j>'],
   \ 'PrtHistory(1)':        ['<c-k>'],
   \ }
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](node_modules|htmlcov)',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
 
 " NerdTree
 map <silent> <LocalLeader>nt :NERDTreeToggle<CR>
 map <silent> <LocalLeader>nr :NERDTree<CR>
 map <silent> <LocalLeader>nf :NERDTreeFind<CR>
+let NerdTreeIgnore = ['\.pyc$']
 
 " TComment
 map <silent> <LocalLeader>cc :TComment<CR>
@@ -224,6 +229,11 @@ nnoremap <Leader>ss :SideSearch <C-r><C-w><CR> | wincmd p
 
 " Make `Y` work from the cursor to the end of line (which is more logical)
 nnoremap Y y$
+
+" Enable powerline
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
 
 " Load local machine settings if they exist
 if filereadable(glob("$HOME/.vimrc.local"))
