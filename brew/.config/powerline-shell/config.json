@@ -1,7 +1,5 @@
 {
     "segments": [
-        "virtual_env",
-        "newline",
         "username",
         "hostname",
         "ssh",
@@ -12,6 +10,7 @@
         "jobs",
         "set_term_title",
         "newline",
+        "virtual_env",
         "root"
     ],
     "mode": "flat",
