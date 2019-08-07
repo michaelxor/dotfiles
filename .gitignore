@@ -1,4 +1,5 @@
 vim/.netrwhist
 vim/.viminfo
+vim/undo/*
+vim/plugged/*
 tmux/.tmux.symlink/*
-tmux/.tmuxinator.symlink/*

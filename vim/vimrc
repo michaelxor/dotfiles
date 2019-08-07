@@ -6,41 +6,32 @@
 " Disable Vi compatibility
 set nocompatible
 
-" Point to location of pathogen submodule (since it's not in .vim/autoload)
-silent! runtime bundle/vim-pathogen/autoload/pathogen.vim
-" Call pathogen plugin management
-silent! call pathogen#infect()
 
-if has("autocmd")
-    " Load files for specific filetypes
-    filetype on
-    filetype indent on
-    filetype plugin on
+"
+" Plugins
+" =======
 
-    " Languages with specific tabs/space requirements
-    autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
-    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
-    " Automatically strip trailing whitespace on file save
-    autocmd BufWritePre *.css,*.html,*.js,*.json,*.md,*.php,*.py,*.rb,*.scss,*.sh,*.txt :call StripTrailingWhitespace()
-    " Automatically run prettier to format javascript files on save
-    autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
-    " Syntax highlight for javascript template literals
-    autocmd FileType javascript JsPreTmpl
-    autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx JsPreTmpl
-    " map keys for python files to run autopep8
-    autocmd FileType python noremap <Leader>ap :call Autopep8()<CR>
+if &shell == "/usr/bin/sudosh"
+  set shell=/bin/bash
 endif
 
-if has("syntax")
-    " Enable syntax highlighting
-    syntax enable
-    " Set 256 color terminal support
-    set t_Co=256
-    " Set dark background
-    set background=dark
-    " Set colorscheme
-    silent! colorscheme solarized
+" Install vim plugins
+source ~/.vim/vimrc.bundles
+
+" Install by default if PlugInstall has never been run
+if !isdirectory(expand("~/.vim/plugged"))
+  autocmd VimEnter * PlugInstall --sync
 endif
+
+
+"
+" General Behavior
+" ================
+
+" Load files for specific filetypes
+filetype on
+filetype indent on
+filetype plugin on
 
 if has("cmdline_info")
     " Show the cursor line and column number
@@ -49,20 +40,6 @@ if has("cmdline_info")
     set showcmd
     " Show whether in insert or replace mode
     set showmode
-endif
-
-if has('statusline')
-    " Always show status line
-    set laststatus=2
-    " Broken down into easily includeable segments
-    " Filename
-    set statusline=%<%f\
-    " Options
-    set statusline+=%w%h%m%r
-    " Current dir
-    set statusline+=\ [%{getcwd()}]
-    " Right aligned file nav info
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%%
 endif
 
 if has("wildmenu")
@@ -75,6 +52,7 @@ if has("wildmenu")
         set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png
         set wildignore+=.DS_Store,.git,.hg,.svn
         set wildignore+=*~,*.sw?,*.tmp
+        set wildignore+=vendor/*,node_modules/**,bower_components/**
     endif
 endif
 
@@ -88,86 +66,6 @@ if has("extra_search")
     " ...unless has mixed case
     set smartcase
 endif
-
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-
-" Prettier
-let g:prettier#exec_cmd_async = 1
-let g:prettier#autoformat = 0
-let g:prettier#config#semi = 'false'
-let g:prettier#config#tab_width = 4
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#arrow_parens = 'always'
-
-" vim-devicons
-let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:WebDevIconsOS = 'Darwin'
-
-" Autopep8
-let g:autopep8_max_line_length=80
-let g:autopep8_aggressive=2
-let g:autopep8_on_save = 1
-let g:autopep8_disable_show_diff=1
-
-" after a re-source, fix syntax matching issues (concealing brackets):
-if exists('g:loaded_webdevicons')
-    call webdevicons#refresh()
-endif
-
-" Syntastic
-let g:syntastic_javascript_checkers=['eslint']
-let g:syntastic_python_checkers=['flake8', 'pylint']
-
-" Fugitive + bitbucket support
-" let g:fugitive_bitbucket_domains =
-
-" vim-test
-let test#strategy = 'vimux'
-let test#python#runner = 'pytest'
-let test#javascript#executable = 'yarn run test'
-
-" CtrlP
-map <silent> <leader>ff :CtrlP<CR>
-map <silent> <leader>fr :CtrlPClearCache<CR>
-map <silent> <leader>fb :CtrlPBuffer<CR>
-
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
-let g:ctrlp_prompt_mappings = {
-  \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-  \ 'PrtSelectMove("k")':   ['<c-p>','<c-k>', '<up>'],
-  \ 'PrtHistory(-1)':       ['<c-j>'],
-  \ 'PrtHistory(1)':        ['<c-k>'],
-  \ }
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](node_modules|htmlcov)',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ }
-
-" NerdTree
-map <silent> <LocalLeader>nt :NERDTreeToggle<CR>
-map <silent> <LocalLeader>nr :NERDTree<CR>
-map <silent> <LocalLeader>nf :NERDTreeFind<CR>
-let NerdTreeIgnore = ['\.pyc$']
-
-" TComment
-map <silent> <LocalLeader>cc :TComment<CR>
-map <silent> <LocalLeader>uc :TComment<CR>
-
-" TagBar
-map <silent> <LocalLeader>tb :TagbarToggle<CR>
-
-" Vimux
-map <silent> <LocalLeader>rl :wa<CR> :VimuxRunLastCommand<CR>
-map <silent> <LocalLeader>vi :wa<CR> :VimuxInspectRunner<CR>
-map <silent> <LocalLeader>vk :wa<CR> :VimuxInterruptRunner<CR>
-map <silent> <LocalLeader>vx :wa<CR> :VimuxClosePanes<CR>
-map <silent> <LocalLeader>vp :VimuxPromptCommand<CR>
-vmap <silent> <LocalLeader>vs "vy :call VimuxRunCommand(@v)<CR>
-nmap <silent> <LocalLeader>vs vip<LocalLeader>vs<CR>
-map <silent> <LocalLeader>ds :call VimuxRunCommand('clear; grep -E "^ *describe[ \(]\|^ *context[ \(]\|^ *it[ \(]" ' . bufname("%"))<CR>
 
 " Backspace through everything in INSERT mode
 set backspace=indent,eol,start
@@ -188,6 +86,8 @@ set tabstop=4
 set expandtab
 " Enable line numbers
 set number
+" Show signcolumn even if there are no signs to show
+set signcolumn=yes
 " Highlight current line
 set cursorline
 " Start scrolling three lines before the horizontal window border
@@ -197,6 +97,59 @@ set nostartofline
 "Increase memory for pattern matching
 set maxmempattern=8192
 
+" Centralize backups, swapfiles and undo history
+set backupdir=$HOME/.vim/backups//
+set directory=$HOME/.vim/swaps//
+if exists("&undodir")
+    set undodir=$HOME/.vim/undo//
+    set undofile
+    set undoreload=10000
+    set undolevels=1000
+endif
+set viminfo+=n$HOME/.vim/.viminfo
+
+" Faster viewport scrolling (3 lines at a time)
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+vnoremap <C-e> 3<C-e>
+vnoremap <C-y> 3<C-y>
+
+" Pasting over selection does not replace the clipboard
+xnoremap <expr> p 'pgv"'.v:register.'y
+
+" Make `Y` work from the cursor to the end of line (which is more logical)
+nnoremap Y y$
+" Toggle paste mode with \pp
+map <silent> <LocalLeader>pp :set paste!<CR>
+" Sometimes a rogue shift key slips through
+command! W w
+
+
+"
+" Style
+" =====
+
+if has("syntax")
+    " Enable syntax highlighting
+    syntax enable
+    " Set 256 color terminal support
+    " set t_Co=256
+    " Set dark background
+    set background=dark
+    " Set colorscheme
+    silent! colorscheme solarized
+endif
+
+let g:airline_theme='solarized'
+
+" vim-devicons
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsOS = 'Darwin'
+
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('g:loaded_webdevicons')
+    call webdevicons#refresh()
+endif
 
 " Show 'invisible' characters
 set list
@@ -206,29 +159,168 @@ set listchars+=trail:·
 set listchars+=nbsp:_
 "set listchars+=eol:¬
 
-" Centralize backups, swapfiles and undo history
-set backupdir=$HOME/.vim/backups//
-set directory=$HOME/.vim/swaps//
-if exists("&undodir")
-    set undodir=$HOME/.vim/undo//
-endif
-set viminfo+=n$HOME/.vim/.viminfo
+autocmd VimEnter * RainbowParenthesesToggle
+autocmd Syntax * RainbowParenthesesLoadRound
+autocmd Syntax * RainbowParenthesesLoadSquare
+autocmd Syntax * RainbowParenthesesLoadBraces
 
-" Strip trailing whitespace (,$)
-noremap <leader>$ :call StripTrailingWhitespace()<CR>
+" Languages with specific tabs/space requirements
+autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType tex setlocal textwidth=80
+autocmd FileType ghmarkdown setlocal textwidth=80
+
+augroup markdown
+  au!
+  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
 
 
-" Faster viewport scrolling (3 lines at a time)
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
-vnoremap <C-e> 3<C-e>
-vnoremap <C-y> 3<C-y>
+" Don't fold by default
+let g:vim_markdown_folding_disabled = 1
+
+"
+" Navigation
+" ==========
+
+" FZF
+let $FZF_DEFAULT_COMMAND = 'find . -name "*" -type f 2>/dev/null
+                            \ | grep -v -E "tmp\/|.gitmodules|.git\/|deps\/|_build\/|node_modules\/|vendor\/"
+                            \ | sed "s|^\./||"'
+let $FZF_DEFAULT_OPTS = '--reverse'
+let g:fzf_layout = { 'up': '~25%' }
+let g:fzf_tags_command = 'ctags -R --exclude=".git\|.svn\|log\|tmp\|db\|pkg" --extra=+f --langmap=Lisp:+.clj'
+
+" prefer git for searching, when available, as it respects gitignore
+function! SmartFuzzy()
+  let root = split(system('git rev-parse --show-toplevel'), '\n')
+  if len(root) == 0 || v:shell_error
+    Files
+  else
+    GFiles -co --exclude-standard -- . ':!:vendor/*'
+  endif
+endfunction
+
+command! -nargs=* SmartFuzzy :call SmartFuzzy()
+map <silent> <leader>ff :SmartFuzzy<CR>
+map <silent> <leader>fg :GFiles<CR>
+map <silent> <leader>fb :Buffers<CR>
+map <silent> <leader>ft :Tags<CR>
+
+" NerdTree
+map <silent> <LocalLeader>nt :NERDTreeToggle<CR>
+map <silent> <LocalLeader>nr :NERDTree<CR>
+map <silent> <LocalLeader>nf :NERDTreeFind<CR>
+let NERDTreeIgnore = ['\.pyc$', '\.o$', '\.class$', '\.lo$', 'tmp']
+let NERDTreeHijackNetrw = 0
+let g:netrw_banner = 0
+
+" Ripgrep
+let g:rg_command = 'rg --vimgrep -S'
+
+" TagBar
+map <silent> <LocalLeader>tb :TagbarToggle<CR>
+
+" SideSearch
+let g:side_search_prg = 'rg --vimgrep --heading --stats -C2'
+let g:side_search_splitter = 'vnew'
+let g:side_search_split_pct = 0.4
 
 " SideSearch current word and return to original window
 nnoremap <Leader>ss :SideSearch <C-r><C-w><CR> | wincmd p
+" Create an shorter `SS` command
+command! -complete=file -nargs=+ SS execute 'SideSearch <args>'
 
-" Make `Y` work from the cursor to the end of line (which is more logical)
-nnoremap Y y$
+
+"
+" Automation & Tooling
+" ====================
+
+" Ale Syntax checkers
+let g:ale_enabled = 1                     " Enable linting by default
+let g:ale_lint_on_text_changed = 'normal' " Only lint while in normal mode
+let g:ale_lint_on_insert_leave = 1        " Automatically lint when leaving insert mode
+
+" let g:ale_set_signs = 0                   " Disable signs showing in the gutter to reduce interruptive visuals
+" let g:ale_linters_explicit = 1            " Only run linters that are explicitly listed below
+" let g:ale_linters = {}
+" let g:ale_linters['puppet'] = ['puppetlint']
+" if filereadable(expand(".rubocop.yml"))
+"   let g:ale_linters['ruby'] = ['rubocop']
+" endif
+
+let g:ale_fix_on_save = 1
+
+" suppress warning caused by python3.7 api change
+if has('python3')
+  silent! python3 1
+endif
+" let g:python3_host_prog = '/usr/local/bin/python3'
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('sources', { '_': ['ale'] })
+
+" strip trailing whitespace on save, for certain files
+let g:wstrip_highlight = 0
+autocmd BufWritePre *.css,*.html,*.js,*.json,*.md,*.php,*.py,*.rb,*.scss,*.sh,*.txt let b:wstrip_auto = 1
+
+" Automatically run prettier to format javascript files on save
+" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+" Syntax highlight for javascript template literals
+" autocmd FileType javascript JsPreTmpl
+" autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx JsPreTmpl
+" map keys for python files to run autopep8
+" autocmd FileType python noremap <Leader>ap :call Autopep8()<CR>
+
+" Syntastic
+" let g:syntastic_javascript_checkers=['eslint']
+" let g:syntastic_python_checkers=['flake8', 'pylint']
+
+" Fugitive + bitbucket support
+" let g:fugitive_bitbucket_domains =
+
+" Prettier
+" let g:prettier#exec_cmd_async = 1
+" let g:prettier#autoformat = 0
+" let g:prettier#config#semi = 'false'
+" let g:prettier#config#tab_width = 4
+" let g:prettier#config#bracket_spacing = 'true'
+" let g:prettier#config#arrow_parens = 'always'
+
+" Autopep8
+" let g:autopep8_max_line_length=80
+" let g:autopep8_aggressive=2
+" let g:autopep8_on_save = 1
+" let g:autopep8_disable_show_diff=1
+
+" vim-test
+let test#strategy = "vimux"
+let test#custom_runners = {}
+let test#javascript#executable = 'yarn run test'
+let test#python#runner = 'pytest'
+let nose_test = system('grep -q "nose" requirements.txt')
+if v:shell_error == 0
+  let test#python#runner = 'nose'
+endif
+
+" TComment
+map <silent> <LocalLeader>cc :TComment<CR>
+map <silent> <LocalLeader>uc :TComment<CR>
+
+" Vimux
+map <silent> <LocalLeader>rl :wa<CR> :VimuxRunLastCommand<CR>
+map <silent> <LocalLeader>vi :wa<CR> :VimuxInspectRunner<CR>
+map <silent> <LocalLeader>vk :wa<CR> :VimuxInterruptRunner<CR>
+map <silent> <LocalLeader>vx :wa<CR> :VimuxClosePanes<CR>
+map <silent> <LocalLeader>vp :VimuxPromptCommand<CR>
+vmap <silent> <LocalLeader>vs "vy :call VimuxRunCommand(@v)<CR>
+nmap <silent> <LocalLeader>vs vip<LocalLeader>vs<CR>
+map <silent> <LocalLeader>ds :call VimuxRunCommand('clear; grep -E "^ *describe[ \(]\|^ *context[ \(]\|^ *it[ \(]" ' . bufname("%"))<CR>
+
+" Optionally override above mappings for specific filetypes
+" autocmd FileType ruby runtime ruby_mappings.vim
+" autocmd FileType python runtime python_mappings.vim
+" autocmd FileType java runtime java_mappings.vim
+
 
 " Load local machine settings if they exist
 if filereadable(glob("$HOME/.vimrc.local"))

@@ -1,0 +1,73 @@
+if &compatible
+  set nocompatible
+end
+
+call plug#begin('~/.vim/plugged')
+
+" Style
+Plug 'altercation/vim-colors-solarized'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Navigation
+Plug 'ddrscott/vim-side-search'
+Plug 'henrik/vim-indexed-search'
+Plug 'jlanzarotta/bufexplorer'  " https://github.com/jlanzarotta/bufexplorer
+Plug 'jremmen/vim-ripgrep'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'  " https://github.com/junegunn/fzf.vim
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'  " https://github.com/scrooloose/nerdtree
+
+" Syntax
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'chr4/nginx.vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'godlygeek/tabular'
+Plug 'hdima/python-syntax'
+Plug 'jtratner/vim-flavored-markdown'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'pearofducks/ansible-vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/mako.vim'
+" Plug 'Quramy/vim-js-pretty-template'
+" Plug 'mxw/vim-jsx'
+
+" Automation / Tooling
+Plug 'benmills/vimux'
+Plug 'janko/vim-test'
+Plug 'mattn/emmet-vim'
+Plug 'pgr0ss/vim-github-url'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
+Plug 'tweekmonster/wstrip.vim', { 'branch': 'diff-error' }
+Plug 'vim-scripts/matchit.zip'
+" Plug 'prettier/vim-prettier'
+" Plug 'tell-k/vim-autopep8'
+" Plug 'vim-syntastic/syntastic'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+if v:version >= 800 || has('nvim')
+  Plug 'dense-analysis/ale'
+endif
+
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source ~/.vimrc.bundles.local
+endif
+
+call plug#end()
