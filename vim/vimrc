@@ -115,7 +115,7 @@ vnoremap <C-e> 3<C-e>
 vnoremap <C-y> 3<C-y>
 
 " Pasting over selection does not replace the clipboard
-xnoremap <expr> p 'pgv"'.v:register.'y
+xnoremap <expr> p 'pgv"'.v:register.'y'
 
 " Make `Y` work from the cursor to the end of line (which is more logical)
 nnoremap Y y$
@@ -297,7 +297,7 @@ let test#strategy = "vimux"
 let test#custom_runners = {}
 let test#javascript#executable = 'yarn run test'
 let test#python#runner = 'pytest'
-let nose_test = system('grep -q "nose" requirements.txt')
+let nose_test = system('grep -q "nose" requirements.txt test-requirements.txt')
 if v:shell_error == 0
   let test#python#runner = 'nose'
 endif
