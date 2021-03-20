@@ -31,12 +31,13 @@ Plug 'kien/rainbow_parentheses.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'mxw/vim-jsx'
 Plug 'pangloss/vim-javascript'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
 Plug 'pearofducks/ansible-vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'vim-ruby/vim-ruby'
 Plug 'vim-scripts/mako.vim'
-" Plug 'Quramy/vim-js-pretty-template'
-" Plug 'mxw/vim-jsx'
 
 " Automation / Tooling
 Plug 'benmills/vimux'
@@ -52,16 +53,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'tweekmonster/wstrip.vim', { 'branch': 'diff-error' }
 Plug 'vim-scripts/matchit.zip'
-" Plug 'prettier/vim-prettier'
-" Plug 'tell-k/vim-autopep8'
-" Plug 'vim-syntastic/syntastic'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 if v:version >= 800 || has('nvim')
   Plug 'dense-analysis/ale'
 endif

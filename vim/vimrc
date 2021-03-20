@@ -240,6 +240,8 @@ command! -complete=file -nargs=+ SS execute 'SideSearch <args>'
 let g:ale_enabled = 1                     " Enable linting by default
 let g:ale_lint_on_text_changed = 'normal' " Only lint while in normal mode
 let g:ale_lint_on_insert_leave = 1        " Automatically lint when leaving insert mode
+let g:ale_fix_on_save = 1
+let g:ale_disable_lsp = 1                 " CoC is running the LSP https://github.com/dense-analysis/ale#faq-coc-nvim
 
 " let g:ale_set_signs = 0                   " Disable signs showing in the gutter to reduce interruptive visuals
 " let g:ale_linters_explicit = 1            " Only run linters that are explicitly listed below
@@ -249,48 +251,19 @@ let g:ale_lint_on_insert_leave = 1        " Automatically lint when leaving inse
 "   let g:ale_linters['ruby'] = ['rubocop']
 " endif
 
-let g:ale_fix_on_save = 1
 
 " suppress warning caused by python3.7 api change
 if has('python3')
   silent! python3 1
 endif
 " let g:python3_host_prog = '/usr/local/bin/python3'
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('sources', { '_': ['ale'] })
 
 " strip trailing whitespace on save, for certain files
 let g:wstrip_highlight = 0
 autocmd BufWritePre *.css,*.html,*.js,*.json,*.md,*.php,*.py,*.rb,*.scss,*.sh,*.txt let b:wstrip_auto = 1
 
-" Automatically run prettier to format javascript files on save
-" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
-" Syntax highlight for javascript template literals
-" autocmd FileType javascript JsPreTmpl
-" autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx JsPreTmpl
-" map keys for python files to run autopep8
-" autocmd FileType python noremap <Leader>ap :call Autopep8()<CR>
-
-" Syntastic
-" let g:syntastic_javascript_checkers=['eslint']
-" let g:syntastic_python_checkers=['flake8', 'pylint']
-
 " Fugitive + bitbucket support
 " let g:fugitive_bitbucket_domains =
-
-" Prettier
-" let g:prettier#exec_cmd_async = 1
-" let g:prettier#autoformat = 0
-" let g:prettier#config#semi = 'false'
-" let g:prettier#config#tab_width = 4
-" let g:prettier#config#bracket_spacing = 'true'
-" let g:prettier#config#arrow_parens = 'always'
-
-" Autopep8
-" let g:autopep8_max_line_length=80
-" let g:autopep8_aggressive=2
-" let g:autopep8_on_save = 1
-" let g:autopep8_disable_show_diff=1
 
 " vim-test
 let test#strategy = "vimux"
